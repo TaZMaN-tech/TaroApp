@@ -5,4 +5,171 @@
 //  Created by Тадевос Курдоглян on 25.03.2025.
 //
 
-import Foundation
+import UIKit
+
+class LoadingViewController: UIViewController {
+
+    private let tipLabel = UILabel()
+    private let cardContainer = UIView()
+    private let animationImageView = UIImageView()
+    private let gradientLayer = CAGradientLayer()
+    private var tipTimer: Timer?
+
+    private let animationImages = [
+        "Ten of Pentacles", "Queen of Wands", "Page of Wands", "Knight of Wands", "King of Wands", "Ace of Wands",
+        "Ten of Wands", "Nine of Wands", "Eight of Wands", "Seven of Wands ", "Six of Wands", "Five of Wands",
+        "Four of Wands", "Three of Wands", "Two of Wands", "Queen of Swords", "Page of Swords", "Knight of Swords",
+        "King of Swords", "Ace of Swords", "Ten of Swords", "Nine of Swords", "Eight of Swords", "Seven of Swords",
+        "Six of Swords", "Five of Swords", "Four of Swords", "Three of Swords", "Two of Swords", "Queen of Pentacles",
+        "Page of Pentacles", "Knight of Pentacles", "King of Pentacles ", "Ace of Pentacles", "Nine of Pentacles",
+        "Eight of Pentacles", "Seven of Pentacles", "Six of Pentacles", "Five of Pentacles", "Four of Pentacles",
+        "Three of Pentacles", "Two of Pentacles", "Queen of Cups", "Page of Cups", "Knight of Cups", "King of Cups",
+        "Ace of Cups", "Ten of Cups", "Nine of Cups", "Eight of Cups", "Seven of Cups", "Six of Cups", "Five of Cups",
+        "Four of Cups", "Three of Cups", "Two of Cups", "The World", "Judgement", "The Sun", "The Moon", "The Star",
+        "The Tower", "The Devil", "Temperance", "Death", "The Hanged Man", "Justice",
+        "10. The Wheel of Fortune", "The Hermit", "Strength", "The Chariot", "The Lovers", "The Hierophant",
+        "The Emperor", "The Empress", "The High Priestess", "The Magician", "The Fool"
+    ]
+
+    private let tips = [
+        "🔮 Призываем энергии Таро...",
+        "✨ Соединяемся со звездами...",
+        "🌌 Раскрываем мистические тайны...",
+        "🃏 Колода шепчет ответы...",
+        "🌠 Вселенная готовит предсказание..."
+    ]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupGradient()
+        setupUI()
+        startGradientAnimation()
+        startAnimatingTips()
+        startImageAnimation()
+        spawnFloatingStars()
+        addGlowAnimation(to: cardContainer)
+    }
+
+    private func setupGradient() {
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            UIColor(red: 1.0, green: 0.85, blue: 0.9, alpha: 1).cgColor,
+            UIColor(red: 1.0, green: 0.75, blue: 0.85, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+
+    private func startGradientAnimation() {
+        let colorAnimation = CABasicAnimation(keyPath: "colors")
+        colorAnimation.fromValue = gradientLayer.colors
+        colorAnimation.toValue = [
+            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 1).cgColor,
+            UIColor(red: 0.9, green: 1.0, blue: 0.9, alpha: 1).cgColor,
+            UIColor(red: 0.9, green: 0.9, blue: 1.0, alpha: 1).cgColor,
+            UIColor(red: 1.0, green: 0.95, blue: 1.0, alpha: 1).cgColor
+        ]
+        colorAnimation.duration = 3
+        colorAnimation.autoreverses = true
+        colorAnimation.repeatCount = .infinity
+        colorAnimation.fillMode = .forwards
+        colorAnimation.isRemovedOnCompletion = false
+        colorAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        gradientLayer.add(colorAnimation, forKey: "colorChange")
+    }
+
+    private func setupUI() {
+        cardContainer.translatesAutoresizingMaskIntoConstraints = false
+        cardContainer.layer.borderColor = UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1).cgColor
+        cardContainer.layer.borderWidth = 4
+        cardContainer.layer.cornerRadius = 16
+        cardContainer.layer.shadowColor = UIColor.systemPink.cgColor
+        cardContainer.layer.shadowOpacity = 0.8
+        cardContainer.layer.shadowRadius = 20
+        cardContainer.layer.shadowOffset = .zero
+        cardContainer.layer.masksToBounds = false
+        view.addSubview(cardContainer)
+
+        animationImageView.contentMode = .scaleAspectFill
+        animationImageView.translatesAutoresizingMaskIntoConstraints = false
+        animationImageView.clipsToBounds = true
+        animationImageView.layer.cornerRadius = 16
+        cardContainer.addSubview(animationImageView)
+
+        tipLabel.text = "Загружаем..."
+        tipLabel.textColor = UIColor.black
+        tipLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        tipLabel.textAlignment = .center
+        tipLabel.numberOfLines = 0
+        tipLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tipLabel)
+
+        NSLayoutConstraint.activate([
+            cardContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            cardContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
+            cardContainer.widthAnchor.constraint(equalToConstant: 200),
+            cardContainer.heightAnchor.constraint(equalToConstant: 300),
+
+            animationImageView.leadingAnchor.constraint(equalTo: cardContainer.leadingAnchor),
+            animationImageView.trailingAnchor.constraint(equalTo: cardContainer.trailingAnchor),
+            animationImageView.topAnchor.constraint(equalTo: cardContainer.topAnchor),
+            animationImageView.bottomAnchor.constraint(equalTo: cardContainer.bottomAnchor),
+
+            tipLabel.topAnchor.constraint(equalTo: cardContainer.bottomAnchor, constant: 30),
+            tipLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tipLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+
+    private func startAnimatingTips() {
+        tipTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            UIView.transition(with: self.tipLabel, duration: 0.5, options: .transitionCrossDissolve) {
+                self.tipLabel.text = self.tips.randomElement()
+            }
+        }
+    }
+
+    private func startImageAnimation() {
+        let images = animationImages.compactMap { UIImage(named: $0) }
+        animationImageView.animationImages = images
+        animationImageView.animationDuration = Double(images.count) * 0.7
+        animationImageView.startAnimating()
+    }
+
+    private func spawnFloatingStars() {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            let star = UIView(frame: CGRect(x: CGFloat.random(in: 0...self.view.bounds.width),
+                                            y: self.view.bounds.height,
+                                            width: 6,
+                                            height: 6))
+            star.backgroundColor = .white
+            star.layer.cornerRadius = 3
+            star.alpha = 0.8
+            self.view.addSubview(star)
+            self.view.bringSubviewToFront(self.tipLabel)
+
+            UIView.animate(withDuration: Double.random(in: 4...7), delay: 0, options: .curveLinear, animations: {
+                star.frame.origin.y = -10
+                star.alpha = 0
+            }, completion: { _ in
+                star.removeFromSuperview()
+            })
+        }
+    }
+
+    private func addGlowAnimation(to view: UIView) {
+        let animation = CABasicAnimation(keyPath: "shadowRadius")
+        animation.fromValue = 5
+        animation.toValue = 15
+        animation.duration = 1.5
+        animation.autoreverses = true
+        animation.repeatCount = .infinity
+        view.layer.add(animation, forKey: "glowPulse")
+    }
+
+    deinit {
+        tipTimer?.invalidate()
+    }
+}

@@ -8,26 +8,29 @@
 import UIKit
 
 extension UITextView {
-    func setBoldText(from text: String) {
-        let attributedString = NSMutableAttributedString(string: text)
-        let pattern = "\\*(.*?)\\*"  // Ищем всё между *
+    func setBoldText(from text: String, baseFontSize: CGFloat = 17) {
+        let baseFont = UIFont.systemFont(ofSize: baseFontSize)
+        let boldFont = UIFont.boldSystemFont(ofSize: baseFontSize)
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: [.font: baseFont])
+        let pattern = "\\*\\*(.*?)\\*\\*"  // Регулярка для двойных звёздочек **текст**
 
         if let regex = try? NSRegularExpression(pattern: pattern) {
             let matches = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
 
-            for match in matches.reversed() {  // Важно идти с конца
-                let boldRange = match.range(at: 1)   // Внутренний текст между *
-                let fullRange = match.range(at: 0)   // Вся *обёрнутая* часть
+            for match in matches.reversed() {  // Обязательно с конца
+                let boldRange = match.range(at: 1)   // Внутренний текст между **
+                let fullRange = match.range(at: 0)   // Вся **обёрнутая** часть
 
-                // Достаём сам текст без звёздочек
+                // Выдёргиваем сам текст без звёздочек
                 let boldText = (text as NSString).substring(with: boldRange)
 
-                // Заменяем *text* на просто text
+                // Заменяем **text** на просто text
                 attributedString.replaceCharacters(in: fullRange, with: boldText)
 
-                // Назначаем жирный стиль на новую позицию текста
+                // Назначаем жирный стиль на новый диапазон
                 attributedString.addAttribute(.font,
-                                              value: UIFont.boldSystemFont(ofSize: self.font?.pointSize ?? 17),
+                                              value: boldFont,
                                               range: NSRange(location: fullRange.location, length: boldText.count))
             }
         }
