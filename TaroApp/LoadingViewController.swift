@@ -53,8 +53,8 @@ class LoadingViewController: UIViewController {
     private func setupGradient() {
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [
-            UIColor(red: 1.0, green: 0.85, blue: 0.9, alpha: 1).cgColor,
-            UIColor(red: 1.0, green: 0.75, blue: 0.85, alpha: 1).cgColor
+            UIColor(red: 125/255, green: 207/255, blue: 235/255, alpha: 1).cgColor,
+            UIColor(red: 255/255, green: 184/255, blue: 108/255, alpha: 1).cgColor
         ]
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
@@ -81,7 +81,7 @@ class LoadingViewController: UIViewController {
 
     private func setupUI() {
         cardContainer.translatesAutoresizingMaskIntoConstraints = false
-        cardContainer.layer.borderColor = UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1).cgColor
+        cardContainer.layer.borderColor = UIColor(red: 240/255, green: 160/255, blue: 80/255, alpha: 1).cgColor
         cardContainer.layer.borderWidth = 4
         cardContainer.layer.cornerRadius = 16
         cardContainer.layer.shadowColor = UIColor.systemPink.cgColor
@@ -98,7 +98,7 @@ class LoadingViewController: UIViewController {
         cardContainer.addSubview(animationImageView)
 
         tipLabel.text = "Загружаем..."
-        tipLabel.textColor = UIColor.black
+        tipLabel.textColor = UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 1.0)
         tipLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         tipLabel.textAlignment = .center
         tipLabel.numberOfLines = 0

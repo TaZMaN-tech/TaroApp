@@ -69,9 +69,9 @@ final class PredictionViewController: UIViewController {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [
-            UIColor.red.withAlphaComponent(0.3).cgColor,
-            UIColor.systemPink.withAlphaComponent(0.3).cgColor,
-            UIColor.white.withAlphaComponent(0.2).cgColor
+            UIColor(red: 0.85, green: 0.9, blue: 0.8, alpha: 1).cgColor,  // мягкий зелёно-голубой
+            UIColor(red: 1.0, green: 0.92, blue: 0.7, alpha: 1).cgColor,  // песочно-жёлтый
+            UIColor(red: 0.95, green: 0.8, blue: 0.6, alpha: 1).cgColor   // тёплый терракотово-бежевый
         ]
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
@@ -82,8 +82,9 @@ final class PredictionViewController: UIViewController {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         gradient.colors = [
-            UIColor(red: 1.0, green: 0.85, blue: 0.8, alpha: 1.0).cgColor,
-            UIColor(red: 1.0, green: 0.7, blue: 0.75, alpha: 1.0).cgColor
+            UIColor(red: 0.85, green: 0.9, blue: 0.8, alpha: 1).cgColor,
+            UIColor(red: 1.0, green: 0.92, blue: 0.7, alpha: 1).cgColor,
+            UIColor(red: 0.95, green: 0.8, blue: 0.6, alpha: 1).cgColor
         ]
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
@@ -138,7 +139,7 @@ final class PredictionViewController: UIViewController {
                         print("Ошибка API: \(error.localizedDescription)")
                         self.predictionTextView.text = "Не удалось получить предсказание. Попробуйте позже."
                     }
-
+                    
                     // Закрываем loading только после того, как UI обновился
                     self.dismissLoadingIfNeeded()
                 }
@@ -173,6 +174,37 @@ final class PredictionViewController: UIViewController {
             }
             
             imageView?.transform = card.rotation ? CGAffineTransform(rotationAngle: .pi) : .identity
+            
+            if card.rotation {
+                let icon = UILabel()
+                icon.text = "🌀"
+                icon.font = UIFont.systemFont(ofSize: 16)
+                icon.translatesAutoresizingMaskIntoConstraints = false
+                imageView?.addSubview(icon)
+                NSLayoutConstraint.activate([
+                    icon.trailingAnchor.constraint(equalTo: imageView!.trailingAnchor, constant: -6),
+                    icon.topAnchor.constraint(equalTo: imageView!.topAnchor, constant: 6)
+                ])
+            }
+            
+            let nameLabel = UILabel()
+            nameLabel.text = card.name
+            nameLabel.textColor = .white
+            nameLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+            nameLabel.textAlignment = .center
+            nameLabel.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+            nameLabel.layer.cornerRadius = 6
+            nameLabel.layer.masksToBounds = true
+            nameLabel.translatesAutoresizingMaskIntoConstraints = false
+
+            if let container = imageView?.superview {
+                container.addSubview(nameLabel)
+                NSLayoutConstraint.activate([
+                    nameLabel.topAnchor.constraint(equalTo: imageView!.bottomAnchor, constant: 4),
+                    nameLabel.centerXAnchor.constraint(equalTo: imageView!.centerXAnchor),
+                    nameLabel.widthAnchor.constraint(equalTo: imageView!.widthAnchor)
+                ])
+            }
         }
     }
 
@@ -192,8 +224,8 @@ final class PredictionViewController: UIViewController {
 
         let gradient = CAGradientLayer()
         gradient.colors = [
-            UIColor(red: 0.95, green: 0.6, blue: 0.9, alpha: 1).cgColor, // розово-сиреневый
-            UIColor(red: 0.5, green: 0.8, blue: 1.0, alpha: 1).cgColor   // небесно-голубой
+            UIColor(red: 0.9, green: 0.6, blue: 0.3, alpha: 1).cgColor, // насыщенный песочно-оранжевый
+            UIColor(red: 0.4, green: 0.7, blue: 0.7, alpha: 1).cgColor  // приглушённый бирюзовый
         ]
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)

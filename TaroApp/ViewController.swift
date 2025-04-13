@@ -54,7 +54,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
             // Заголовок
             greetingLabel.text = "✨ Судьба шепчет твоё имя… Напиши его, и карты откроют истину"
             greetingLabel.font = UIFont.systemFont(ofSize: 26, weight: .semibold)
-            greetingLabel.textColor = UIColor.white
+            greetingLabel.textColor = UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 1.0) // более контрастный тёплый коричневый
+            greetingLabel.layer.shadowColor = UIColor(red: 255/255, green: 190/255, blue: 0, alpha: 0.5).cgColor
+            greetingLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+            greetingLabel.layer.shadowRadius = 8
+            greetingLabel.layer.shadowOpacity = 1.0
             greetingLabel.backgroundColor = UIColor.black.withAlphaComponent(0.3)
             greetingLabel.layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
             greetingLabel.layer.borderWidth = 1.0
@@ -67,20 +71,40 @@ class ViewController: UIViewController, UITextFieldDelegate {
             nameTextField.layer.masksToBounds = true
 
             // Кнопки с эмодзи
-            styleButton(lovePredictionButton, title: "❤️ Расклад на любовь", colors: [UIColor.systemPink.cgColor, UIColor.systemRed.cgColor])
-            styleButton(jobPredictionButton, title: "💼 Расклад на работу", colors: [UIColor.systemIndigo.cgColor, UIColor.systemBlue.cgColor])
-            styleButton(dayPredictionButton, title: "🌞 Расклад на день", colors: [UIColor.systemTeal.cgColor, UIColor.systemCyan.cgColor])
-            styleButton(futurePredictionButton, title: "🔮 Расклад на будущее", colors: [UIColor.systemPurple.cgColor, UIColor.systemIndigo.cgColor])
+            styleButton(lovePredictionButton, title: "❤️ Расклад на любовь", colors: [
+                UIColor(red: 230/255, green: 110/255, blue: 120/255, alpha: 1.0).cgColor,
+                UIColor(red: 240/255, green: 160/255, blue: 80/255, alpha: 1.0).cgColor
+            ])
+            
+            styleButton(jobPredictionButton, title: "💼 Расклад на работу", colors: [
+                UIColor(red: 60/255, green: 100/255, blue: 140/255, alpha: 1.0).cgColor,
+                UIColor(red: 185/255, green: 140/255, blue: 70/255, alpha: 1.0).cgColor
+            ])
 
+            styleButton(dayPredictionButton, title: "🌞 Расклад на день", colors: [
+                UIColor(red: 255/255, green: 200/255, blue: 40/255, alpha: 1.0).cgColor,
+                UIColor(red: 245/255, green: 160/255, blue: 60/255, alpha: 1.0).cgColor
+            ])
+
+            styleButton(futurePredictionButton, title: "🔮 Расклад на будущее", colors: [
+                UIColor(red: 120/255, green: 210/255, blue: 235/255, alpha: 1.0).cgColor,
+                UIColor(red: 135/255, green: 180/255, blue: 210/255, alpha: 1.0).cgColor
+            ])
         
-            styleButton(selfDiscoveryButton, title: "🧘 Расклад на гармонию", colors: [UIColor.systemGreen.cgColor, UIColor.systemMint.cgColor])
+            styleButton(selfDiscoveryButton, title: "🧘 Расклад на гармонию", colors: [
+                UIColor(red: 80/255, green: 150/255, blue: 60/255, alpha: 1.0).cgColor,
+                UIColor(red: 145/255, green: 210/255, blue: 145/255, alpha: 1.0).cgColor
+            ])
 
+            styleButton(yesNoButton, title: "🩺 Расклад на здоровье", colors: [
+                UIColor(red: 200/255, green: 130/255, blue: 30/255, alpha: 1.0).cgColor,
+                UIColor(red: 255/255, green: 190/255, blue: 110/255, alpha: 1.0).cgColor
+            ])
 
-            styleButton(yesNoButton, title: "🩺 Расклад на здоровье", colors: [UIColor.systemOrange.cgColor, UIColor.systemRed.cgColor])
-
-            styleButton(karmaButton, title: "🏖️ Расклад на отпуск", colors: [UIColor.systemIndigo.cgColor, UIColor.systemPurple.cgColor])
-
-
+            styleButton(karmaButton, title: "🏖️ Расклад на отпуск", colors: [
+                UIColor(red: 70/255, green: 200/255, blue: 215/255, alpha: 1.0).cgColor,
+                UIColor(red: 100/255, green: 180/255, blue: 210/255, alpha: 1.0).cgColor
+            ])
 
             animateElements()
         }
@@ -110,8 +134,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         gradient.frame = view.bounds
 
         gradient.colors = [
-            UIColor(red: 1.0, green: 0.85, blue: 0.8, alpha: 1.0).cgColor,   // светло-персиковый
-            UIColor(red: 1.0, green: 0.7, blue: 0.75, alpha: 1.0).cgColor    // нежно-розовый
+            UIColor(red: 125/255, green: 207/255, blue: 235/255, alpha: 1.0).cgColor,  // Более яркий голубой
+            UIColor(red: 255/255, green: 184/255, blue: 108/255, alpha: 1.0).cgColor   // Более насыщенный персиковый
         ]
 
         gradient.startPoint = CGPoint(x: 0, y: 0)
