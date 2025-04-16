@@ -1,0 +1,54 @@
+
+/* Class = "UITextField"; placeholder = "Имя"; ObjectID = "3IU-OD-QlI"; */
+"3IU-OD-QlI.placeholder" = "Имя";
+
+/* Class = "UILabel"; text = "Привет! "; ObjectID = "BVv-XR-VAL"; */
+"BVv-XR-VAL.text" = "Привет! ";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "C6F-2m-zeo"; */
+"C6F-2m-zeo.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "C6F-2m-zeo"; */
+"C6F-2m-zeo.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "GYM-A8-eOQ"; */
+"GYM-A8-eOQ.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GYM-A8-eOQ"; */
+"GYM-A8-eOQ.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "JC5-iR-Bkb"; */
+"JC5-iR-Bkb.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "JC5-iR-Bkb"; */
+"JC5-iR-Bkb.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "Lxi-hR-ngJ"; */
+"Lxi-hR-ngJ.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Lxi-hR-ngJ"; */
+"Lxi-hR-ngJ.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "One-GB-Sf2"; */
+"One-GB-Sf2.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "One-GB-Sf2"; */
+"One-GB-Sf2.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "b9o-gp-Vhg"; */
+"b9o-gp-Vhg.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "b9o-gp-Vhg"; */
+"b9o-gp-Vhg.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "fbB-5D-166"; */
+"fbB-5D-166.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "fbB-5D-166"; */
+"fbB-5D-166.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "khH-Q9-q1n"; */
+"khH-Q9-q1n.configuration.title" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "khH-Q9-q1n"; */
+"khH-Q9-q1n.normalTitle" = "Button";
