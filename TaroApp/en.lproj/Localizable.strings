@@ -28,6 +28,23 @@
 "tip_3" = "🌌 Unlocking mystical secrets...";
 "tip_4" = "🃏 The deck is whispering answers...";
 "tip_5" = "🌠 The universe is preparing your reading...";
+"loading_tip_accessibility" = "Loading screen tip";
 
 "new_prediction" = "NEW READING";
 "prediction_error" = "Failed to get prediction. Please try again later.";
+
+
+"greeting_accessibility" = "Enter your name for the tarot reading";
+"name_field_accessibility" = "Name input field";
+"name_field_hint" = "Type your name to receive a prediction";
+
+"love_button_accessibility" = "Love reading button";
+"love_button_hint" = "Tap to receive a love prediction";
+
+"prediction_result_accessibility" = "Prediction text";
+
+"card_number_format" = "Card %d";
+"card_reversed" = "reversed";
+"card_upright" = "upright";
+
+"fullscreen_card_accessibility" = "%@ card shown in fullscreen";

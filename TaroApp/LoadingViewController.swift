@@ -103,6 +103,12 @@ class LoadingViewController: UIViewController {
         tipLabel.textAlignment = .center
         tipLabel.numberOfLines = 0
         tipLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Accessibility settings
+        tipLabel.accessibilityLabel = NSLocalizedString("loading_tip_accessibility", comment: "")
+        tipLabel.adjustsFontForContentSizeCategory = true
+        tipLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+
         view.addSubview(tipLabel)
 
         NSLayoutConstraint.activate([

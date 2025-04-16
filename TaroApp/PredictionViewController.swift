@@ -33,6 +33,10 @@ final class PredictionViewController: UIViewController {
         animateElements()
         styleBackButton()
         
+        predictionTextView.accessibilityLabel = NSLocalizedString("prediction_result_accessibility", comment: "")
+        predictionTextView.adjustsFontForContentSizeCategory = true
+        predictionTextView.font = UIFont.preferredFont(forTextStyle: .body)
+
         [firstTaroImageView, secondTaroImageView, thirdTaroImageView].forEach {
             $0?.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
@@ -222,6 +226,11 @@ final class PredictionViewController: UIViewController {
         backButton.layer.cornerRadius = 16
         backButton.layer.masksToBounds = true
 
+        backButton.accessibilityLabel = NSLocalizedString("new_prediction", comment: "")
+        backButton.accessibilityHint = NSLocalizedString("new_prediction_hint", comment: "")
+        backButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        backButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+
         let gradient = CAGradientLayer()
         gradient.colors = [
             UIColor(red: 0.9, green: 0.6, blue: 0.3, alpha: 1).cgColor, // насыщенный песочно-оранжевый
@@ -290,6 +299,13 @@ final class PredictionViewController: UIViewController {
         let dismissTap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenView(_:)))
         fullscreenView.addGestureRecognizer(dismissTap)
         fullscreenView.isUserInteractionEnabled = true
+        
+        fullscreenView.isAccessibilityElement = true
+        fullscreenView.accessibilityViewIsModal = true
+
+        let accessibilityLabel = String(format: NSLocalizedString("fullscreen_card_accessibility", comment: ""), cardName)
+        fullscreenView.accessibilityLabel = accessibilityLabel
+        fullscreenView.accessibilityTraits = .image
 
         view.addSubview(fullscreenView)
         

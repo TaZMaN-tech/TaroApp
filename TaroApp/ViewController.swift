@@ -64,6 +64,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         func setupUI() {
             // Заголовок
             greetingLabel.text = NSLocalizedString("greeting_text", comment: "")
+            greetingLabel.accessibilityLabel = NSLocalizedString("greeting_accessibility", comment: "")
+            greetingLabel.accessibilityTraits = .header
+            greetingLabel.adjustsFontForContentSizeCategory = true
+            greetingLabel.font = UIFont.preferredFont(forTextStyle: .title1)
             greetingLabel.font = UIFont.systemFont(ofSize: 26, weight: .semibold)
             greetingLabel.textColor = UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 1.0) // более контрастный тёплый коричневый
             greetingLabel.layer.shadowColor = UIColor(red: 255/255, green: 190/255, blue: 0, alpha: 0.5).cgColor
@@ -78,6 +82,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
             // Текстовое поле
             nameTextField.placeholder = NSLocalizedString("placeholder_name", comment: "")
+            nameTextField.accessibilityLabel = NSLocalizedString("name_field_accessibility", comment: "")
+            nameTextField.accessibilityHint = NSLocalizedString("name_field_hint", comment: "")
+            nameTextField.adjustsFontForContentSizeCategory = true
+            nameTextField.font = UIFont.preferredFont(forTextStyle: .body)
             nameTextField.layer.cornerRadius = 14
             nameTextField.layer.masksToBounds = true
 
@@ -126,6 +134,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             button.setTitle(title, for: .normal)
             button.setTitleColor(.white, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+            button.titleLabel?.adjustsFontForContentSizeCategory = true
+            button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
             button.layer.cornerRadius = 14
             button.layer.masksToBounds = true
             button.titleEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
