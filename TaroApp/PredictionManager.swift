@@ -17,19 +17,22 @@ class PredictionManager {
 
     func generatePrompt(name: String, prediction: String) -> String {
         let resultString = cards.map { $0.description }.joined(separator: ", ")
+        let greeting = String(format: NSLocalizedString("prompt_greeting", comment: ""), name)
+        let summary = String(format: NSLocalizedString("prompt_summary", comment: ""), name, prediction, resultString)
+        let card1 = NSLocalizedString("prompt_card1", comment: "")
+        let card2 = NSLocalizedString("prompt_card2", comment: "")
+        let card3 = NSLocalizedString("prompt_card3", comment: "")
+        let ending = NSLocalizedString("prompt_ending", comment: "")
+
         return """
-        Привет! Меня зовут \(name).
-        Расскажи \(prediction) по 3 картам Таро: \(resultString).
-        Сделай ответ кратким, но информативным. Обязательно оформи его в следующем виде:
-        
-        Привет, \(name)!
-        Вот твой [название расклада]:
+        \(greeting)
+        \(summary)
 
-        🔮 Карта 1: [название] — [краткое значение]
-        🔮 Карта 2: [название] — [краткое значение]
-        🔮 Карта 3: [название] — [краткое значение]
+        \(card1)
+        \(card2)
+        \(card3)
 
-        В конце добавь короткий вывод, 2-3 предложения. Учитывай, перевернута ли карта. Используй эмоджи
+        \(ending)
         """
     }
 

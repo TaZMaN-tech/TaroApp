@@ -19,6 +19,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var yesNoButton: UIButton!
     @IBOutlet var karmaButton: UIButton!
 
+    var predictionButtons: [UIButton] {
+        return [
+            lovePredictionButton,
+            jobPredictionButton,
+            dayPredictionButton,
+            futurePredictionButton,
+            selfDiscoveryButton,
+            yesNoButton,
+            karmaButton
+        ]
+    }
     
     override func viewDidLoad() {
             super.viewDidLoad()
@@ -52,7 +63,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
         func setupUI() {
             // Заголовок
-            greetingLabel.text = "✨ Судьба шепчет твоё имя… Напиши его, и карты откроют истину"
+            greetingLabel.text = NSLocalizedString("greeting_text", comment: "")
             greetingLabel.font = UIFont.systemFont(ofSize: 26, weight: .semibold)
             greetingLabel.textColor = UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 1.0) // более контрастный тёплый коричневый
             greetingLabel.layer.shadowColor = UIColor(red: 255/255, green: 190/255, blue: 0, alpha: 0.5).cgColor
@@ -66,47 +77,49 @@ class ViewController: UIViewController, UITextFieldDelegate {
             greetingLabel.layer.masksToBounds = true
 
             // Текстовое поле
-            nameTextField.placeholder = "Введите имя"
+            nameTextField.placeholder = NSLocalizedString("placeholder_name", comment: "")
             nameTextField.layer.cornerRadius = 14
             nameTextField.layer.masksToBounds = true
 
             // Кнопки с эмодзи
-            styleButton(lovePredictionButton, title: "❤️ Расклад на любовь", colors: [
-                UIColor(red: 230/255, green: 110/255, blue: 120/255, alpha: 1.0).cgColor,
-                UIColor(red: 240/255, green: 160/255, blue: 80/255, alpha: 1.0).cgColor
-            ])
-            
-            styleButton(jobPredictionButton, title: "💼 Расклад на работу", colors: [
-                UIColor(red: 60/255, green: 100/255, blue: 140/255, alpha: 1.0).cgColor,
-                UIColor(red: 185/255, green: 140/255, blue: 70/255, alpha: 1.0).cgColor
-            ])
-
-            styleButton(dayPredictionButton, title: "🌞 Расклад на день", colors: [
-                UIColor(red: 255/255, green: 200/255, blue: 40/255, alpha: 1.0).cgColor,
-                UIColor(red: 245/255, green: 160/255, blue: 60/255, alpha: 1.0).cgColor
-            ])
-
-            styleButton(futurePredictionButton, title: "🔮 Расклад на будущее", colors: [
-                UIColor(red: 120/255, green: 210/255, blue: 235/255, alpha: 1.0).cgColor,
-                UIColor(red: 135/255, green: 180/255, blue: 210/255, alpha: 1.0).cgColor
-            ])
-        
-            styleButton(selfDiscoveryButton, title: "🧘 Расклад на гармонию", colors: [
-                UIColor(red: 80/255, green: 150/255, blue: 60/255, alpha: 1.0).cgColor,
-                UIColor(red: 145/255, green: 210/255, blue: 145/255, alpha: 1.0).cgColor
-            ])
-
-            styleButton(yesNoButton, title: "🩺 Расклад на здоровье", colors: [
-                UIColor(red: 200/255, green: 130/255, blue: 30/255, alpha: 1.0).cgColor,
-                UIColor(red: 255/255, green: 190/255, blue: 110/255, alpha: 1.0).cgColor
-            ])
-
-            styleButton(karmaButton, title: "🏖️ Расклад на отпуск", colors: [
-                UIColor(red: 70/255, green: 200/255, blue: 215/255, alpha: 1.0).cgColor,
-                UIColor(red: 100/255, green: 180/255, blue: 210/255, alpha: 1.0).cgColor
-            ])
+            for (button, title, colors) in buttonConfigurations() {
+                styleButton(button, title: title, colors: colors)
+            }
 
             animateElements()
+        }
+
+        func buttonConfigurations() -> [(UIButton, String, [CGColor])] {
+            return [
+                (lovePredictionButton, NSLocalizedString("love_button", comment: ""), [
+                    UIColor(red: 230/255, green: 110/255, blue: 120/255, alpha: 1.0).cgColor,
+                    UIColor(red: 240/255, green: 160/255, blue: 80/255, alpha: 1.0).cgColor
+                ]),
+                (jobPredictionButton, NSLocalizedString("job_button", comment: ""), [
+                    UIColor(red: 60/255, green: 100/255, blue: 140/255, alpha: 1.0).cgColor,
+                    UIColor(red: 185/255, green: 140/255, blue: 70/255, alpha: 1.0).cgColor
+                ]),
+                (dayPredictionButton, NSLocalizedString("day_button", comment: ""), [
+                    UIColor(red: 255/255, green: 200/255, blue: 40/255, alpha: 1.0).cgColor,
+                    UIColor(red: 245/255, green: 160/255, blue: 60/255, alpha: 1.0).cgColor
+                ]),
+                (futurePredictionButton, NSLocalizedString("future_button", comment: ""), [
+                    UIColor(red: 120/255, green: 210/255, blue: 235/255, alpha: 1.0).cgColor,
+                    UIColor(red: 135/255, green: 180/255, blue: 210/255, alpha: 1.0).cgColor
+                ]),
+                (selfDiscoveryButton, NSLocalizedString("self_button", comment: ""), [
+                    UIColor(red: 80/255, green: 150/255, blue: 60/255, alpha: 1.0).cgColor,
+                    UIColor(red: 145/255, green: 210/255, blue: 145/255, alpha: 1.0).cgColor
+                ]),
+                (yesNoButton, NSLocalizedString("health_button", comment: ""), [
+                    UIColor(red: 200/255, green: 130/255, blue: 30/255, alpha: 1.0).cgColor,
+                    UIColor(red: 255/255, green: 190/255, blue: 110/255, alpha: 1.0).cgColor
+                ]),
+                (karmaButton, NSLocalizedString("karma_button", comment: ""), [
+                    UIColor(red: 70/255, green: 200/255, blue: 215/255, alpha: 1.0).cgColor,
+                    UIColor(red: 100/255, green: 180/255, blue: 210/255, alpha: 1.0).cgColor
+                ])
+            ]
         }
 
         func styleButton(_ button: UIButton, title: String, colors: [CGColor]) {
@@ -115,7 +128,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
             button.layer.cornerRadius = 14
             button.layer.masksToBounds = true
-            button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+            button.titleEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
 
             // Градиент
             let gradientLayer = CAGradientLayer()
@@ -160,62 +173,25 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
 
         func updateButtonGradients() {
-            for button in [lovePredictionButton, jobPredictionButton, dayPredictionButton, futurePredictionButton, selfDiscoveryButton, yesNoButton, karmaButton] {
-                if let gradient = button?.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
-                    gradient.frame = button?.bounds ?? .zero
+            for button in predictionButtons {
+                if let gradient = button.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
+                    gradient.frame = button.bounds
                 }
             }
         }
 
     func animateElements() {
         // Начальное состояние
-        greetingLabel.alpha = 0
-        nameTextField.alpha = 0
-        lovePredictionButton.alpha = 0
-        jobPredictionButton.alpha = 0
-        dayPredictionButton.alpha = 0
-        futurePredictionButton.alpha = 0
-        selfDiscoveryButton.alpha = 0
-        yesNoButton.alpha = 0
-        karmaButton.alpha = 0
+        for button in predictionButtons {
+            button.alpha = 0
+        }
 
         // Анимация появления с небольшими задержками
-        UIView.animate(withDuration: 1.0, delay: 0.2, options: [.curveEaseOut], animations: {
-            self.greetingLabel.alpha = 1
-        }, completion: nil)
-
-        UIView.animate(withDuration: 1.0, delay: 0.4, options: [.curveEaseOut], animations: {
-            self.nameTextField.alpha = 1
-        }, completion: nil)
-
-        self.view.backgroundColor = .clear
-        UIView.animate(withDuration: 1.0, delay: 0.6, options: [.curveEaseOut], animations: {
-            self.lovePredictionButton.alpha = 1
-        }, completion: nil)
-
-        UIView.animate(withDuration: 1.0, delay: 0.8, options: [.curveEaseOut], animations: {
-            self.jobPredictionButton.alpha = 1
-        }, completion: nil)
-
-        UIView.animate(withDuration: 1.0, delay: 1.0, options: [.curveEaseOut], animations: {
-            self.dayPredictionButton.alpha = 1
-        }, completion: nil)
-
-        UIView.animate(withDuration: 1.0, delay: 1.2, options: [.curveEaseOut], animations: {
-            self.futurePredictionButton.alpha = 1
-        }, completion: nil)
-
-        UIView.animate(withDuration: 1.0, delay: 1.4, options: [.curveEaseOut], animations: {
-            self.selfDiscoveryButton.alpha = 1
-        }, completion: nil)
-
-        UIView.animate(withDuration: 1.0, delay: 1.6, options: [.curveEaseOut], animations: {
-            self.yesNoButton.alpha = 1
-        }, completion: nil)
-
-        UIView.animate(withDuration: 1.0, delay: 1.8, options: [.curveEaseOut], animations: {
-            self.karmaButton.alpha = 1
-        }, completion: nil)
+        for (index, button) in predictionButtons.enumerated() {
+            UIView.animate(withDuration: 1.0, delay: 0.6 + Double(index) * 0.2, options: [.curveEaseOut], animations: {
+                button.alpha = 1
+            }, completion: nil)
+        }
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

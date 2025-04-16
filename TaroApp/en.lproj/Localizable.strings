@@ -5,3 +5,29 @@
   Created by Тадевос Курдоглян on 16.04.2025.
   
 */
+"greeting_text" = "✨ Fate whispers your name… Write it down, and the cards will reveal the truth";
+"placeholder_name" = "Enter your name";
+"love_button" = "❤️ Love Reading";
+"job_button" = "💼 Career Reading";
+"day_button" = "🌞 Daily Reading";
+"future_button" = "🔮 Future Reading";
+"self_button" = "🧘 Self-Discovery Reading";
+"health_button" = "🩺 Health Reading";
+"karma_button" = "🏖️ Vacation Reading";
+
+"prompt_greeting" = "Hello, %@!";
+"prompt_summary" = "Give a reading for %@ based on 3 Tarot cards: %@.\nKeep the answer short but meaningful. Format it like this:";
+"prompt_card1" = "🔮 Card 1: [name] — [brief meaning]";
+"prompt_card2" = "🔮 Card 2: [name] — [brief meaning]";
+"prompt_card3" = "🔮 Card 3: [name] — [brief meaning]";
+"prompt_ending" = "At the end, add a short summary in 2-3 sentences. Take reversed cards into account. Use emojis.";
+
+"tip_loading" = "Loading...";
+"tip_1" = "🔮 Channeling Tarot energies...";
+"tip_2" = "✨ Connecting with the stars...";
+"tip_3" = "🌌 Unlocking mystical secrets...";
+"tip_4" = "🃏 The deck is whispering answers...";
+"tip_5" = "🌠 The universe is preparing your reading...";
+
+"new_prediction" = "NEW READING";
+"prediction_error" = "Failed to get prediction. Please try again later.";

@@ -32,11 +32,11 @@ class LoadingViewController: UIViewController {
     ]
 
     private let tips = [
-        "🔮 Призываем энергии Таро...",
-        "✨ Соединяемся со звездами...",
-        "🌌 Раскрываем мистические тайны...",
-        "🃏 Колода шепчет ответы...",
-        "🌠 Вселенная готовит предсказание..."
+        NSLocalizedString("tip_1", comment: ""),
+        NSLocalizedString("tip_2", comment: ""),
+        NSLocalizedString("tip_3", comment: ""),
+        NSLocalizedString("tip_4", comment: ""),
+        NSLocalizedString("tip_5", comment: "")
     ]
 
     override func viewDidLoad() {
@@ -97,7 +97,7 @@ class LoadingViewController: UIViewController {
         animationImageView.layer.cornerRadius = 16
         cardContainer.addSubview(animationImageView)
 
-        tipLabel.text = "Загружаем..."
+        tipLabel.text = NSLocalizedString("tip_loading", comment: "")
         tipLabel.textColor = UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 1.0)
         tipLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         tipLabel.textAlignment = .center

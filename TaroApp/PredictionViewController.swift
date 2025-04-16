@@ -137,7 +137,7 @@ final class PredictionViewController: UIViewController {
                         self.predictionTextView.textAlignment = .center
                     case .failure(let error):
                         print("Ошибка API: \(error.localizedDescription)")
-                        self.predictionTextView.text = "Не удалось получить предсказание. Попробуйте позже."
+                        self.predictionTextView.text = NSLocalizedString("prediction_error", comment: "")
                     }
                     
                     // Закрываем loading только после того, как UI обновился
@@ -216,7 +216,7 @@ final class PredictionViewController: UIViewController {
     }
 
     private func styleBackButton() {
-        backButton.setTitle("НОВЫЙ РАСКЛАД", for: .normal)
+        backButton.setTitle(NSLocalizedString("new_prediction", comment: ""), for: .normal)
         backButton.setTitleColor(.white, for: .normal)
         backButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         backButton.layer.cornerRadius = 16
