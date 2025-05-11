@@ -5,9 +5,18 @@
 //  Created by Тадевос Курдоглян on 19.03.2025.
 //
 
+import YandexMobileAds
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
+
+    private lazy var interstitialAdLoader: InterstitialAdLoader = {
+        let loader = InterstitialAdLoader()
+        loader.delegate = self
+        return loader
+    }()
+
+    private var interstitialAd: InterstitialAd?
 
     @IBOutlet var greetingLabel: UILabel!
     @IBOutlet var nameTextField: UITextField!
@@ -32,14 +41,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidLoad() {
-            super.viewDidLoad()
-            setupUI()
-            greetingLabel.numberOfLines = 0
-            greetingLabel.textAlignment = .center
-            addGradientBackground()
-            addStarOverlay()
-            nameTextField.delegate = self
-        }
+        super.viewDidLoad()
+        setupUI()
+        greetingLabel.numberOfLines = 0
+        greetingLabel.textAlignment = .center
+        addGradientBackground()
+        addStarOverlay()
+        nameTextField.delegate = self
+        loadInterstitialAd()
+    }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             super.touchesBegan(touches, with: event)
@@ -207,5 +217,31 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    func loadInterstitialAd() {
+        let configuration = AdRequestConfiguration(adUnitID: "R-M-15108836-1") // замените на ваш adUnitID
+        interstitialAdLoader.loadAd(with: configuration)
+    }
+}
+
+extension ViewController: InterstitialAdLoaderDelegate {
+    func interstitialAdLoader(_ adLoader: InterstitialAdLoader, didLoad interstitialAd: InterstitialAd) {
+        self.interstitialAd = interstitialAd
+        self.interstitialAd?.delegate = self
+        self.interstitialAd?.show(from: self)
+    }
+
+    func interstitialAdLoader(_ adLoader: InterstitialAdLoader, didFailToLoadWithError error: AdRequestError) {
+        print("Не удалось загрузить рекламу)")
+    }
+}
+
+extension ViewController: InterstitialAdDelegate {
+    func interstitialAdDidDismiss(_ interstitialAd: InterstitialAd) {
+        print("Реклама была закрыта пользователем.")
+    }
+
+    func interstitialAd(_ interstitialAd: InterstitialAd, didFailToShowWithError error: Error) {
+        print("Ошибка показа рекламы: \(error.localizedDescription)")
     }
 }
