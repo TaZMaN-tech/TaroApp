@@ -126,9 +126,11 @@ final class PredictionViewController: UIViewController {
             self.predictionManager.drawCards()
             self.setupCards()
 
-            let prompt = self.predictionManager.generatePrompt(name: self.name ?? "", prediction: self.prediction ?? "")
+            //let prompt = self.predictionManager.generatePrompt(name: self.name ?? "", prediction: self.prediction ?? "")
             
-            self.predictionManager.callDeepseekAPI(prompt: prompt) { result in
+            let cards = self.predictionManager.cards.map { $0.name }
+            let lang = Locale.current.languageCode ?? "en"
+            self.predictionManager.callDeepseekAPI(cards: cards, name: self.name ?? "", subject: self.prediction ?? "", lang: lang) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let content):

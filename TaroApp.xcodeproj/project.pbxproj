@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C0003BC12DB0231A00D1D069 /* YandexMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = C0003BC02DB0231A00D1D069 /* YandexMobileAds */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		C05E2E552D8A9E8800BDCFBB /* TaroApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaroApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0003BC12DB0231A00D1D069 /* YandexMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = TaroApp;
 			packageProductDependencies = (
+				C0003BC02DB0231A00D1D069 /* YandexMobileAds */,
 			);
 			productName = TaroApp;
 			productReference = C05E2E552D8A9E8800BDCFBB /* TaroApp.app */;
@@ -108,6 +114,9 @@
 			);
 			mainGroup = C05E2E4C2D8A9E8800BDCFBB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C0003BBF2DB0231A00D1D069 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C05E2E562D8A9E8800BDCFBB /* Products */;
 			projectDirPath = "";
@@ -346,6 +355,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C0003BBF2DB0231A00D1D069 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yandexmobile/yandex-ads-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C0003BC02DB0231A00D1D069 /* YandexMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0003BBF2DB0231A00D1D069 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = YandexMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C05E2E4D2D8A9E8800BDCFBB /* Project object */;
 }

@@ -36,25 +36,34 @@ class PredictionManager {
         """
     }
 
-    func callDeepseekAPI(prompt: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: "https://api.deepseek.com/v1/chat/completions") else {
+    func callDeepseekAPI(cards: [String], name: String, subject: String, lang: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let url = URL(string: "https://taroapp-back.onrender.com/tarot?ver=0.1") else {
             completion(.failure(NSError(domain: "InvalidURL", code: -1, userInfo: nil)))
             return
         }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let apiKey = "sk-90ccc7b9833a4af89868d6248e2d1ea6"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let body: [String: Any] = [
-            "model": "deepseek-chat",
-            "messages": [["role": "user", "content": prompt]],
-            "max_tokens": 500
+            "cards": cards,
+            "name": name,
+            "lang": lang,
+            "subject": subject
         ]
 
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: body, options: [])
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                print("📦 Отправляемое тело запроса:\n\(jsonString)")
+            }
+            request.httpBody = jsonData
+        } catch {
+            print("❌ Ошибка сериализации JSON: \(error)")
+            completion(.failure(error))
+            return
+        }
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -67,23 +76,19 @@ class PredictionManager {
                 return
             }
 
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("🔍 Ответ от сервера: \(responseString)")
+            } else {
+                print("⚠️ Не удалось преобразовать данные в строку")
+            }
+
             do {
                 let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-                if let errorInfo = json?["error"] as? [String: Any],
-                   let errorMessage = errorInfo["message"] as? String {
-                    completion(.failure(NSError(domain: "APIError", code: -3, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
-                    return
-                }
-
-                if let choices = json?["choices"] as? [[String: Any]],
-                   let firstChoice = choices.first,
-                   let message = firstChoice["message"] as? [String: Any],
-                   let content = message["content"] as? String {
+                if let content = json?["content"] as? String {
                     completion(.success(content))
                 } else {
                     completion(.failure(NSError(domain: "InvalidResponse", code: -4, userInfo: nil)))
                 }
-
             } catch {
                 completion(.failure(error))
             }
