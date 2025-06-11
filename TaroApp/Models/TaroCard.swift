@@ -30,7 +30,7 @@ struct TaroCard {
         }
 }
 
-private let tarotCardNames = [
+let tarotCardNames = [
     "Ten of Pentacles", "Queen of Wands", "Page of Wands", "Knight of Wands", "King of Wands", "Ace of Wands",
     "Ten of Wands", "Nine of Wands", "Eight of Wands", "Seven of Wands", "Six of Wands", "Five of Wands",
     "Four of Wands", "Three of Wands", "Two of Wands", "Queen of Swords", "Page of Swords", "Knight of Swords",

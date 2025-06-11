@@ -48,3 +48,7 @@
 "card_upright" = "upright";
 
 "fullscreen_card_accessibility" = "%@ card shown in fullscreen";
+
+"empty_name_title" = "Enter Name";
+"empty_name_message" = "Please enter your name before proceeding.";
+"ok_button" = "OK";

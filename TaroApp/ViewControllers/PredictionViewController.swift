@@ -8,22 +8,23 @@
 import UIKit
 
 final class PredictionViewController: UIViewController {
-    
+
     @IBOutlet var firstTaroImageView: UIImageView!
     @IBOutlet var secondTaroImageView: UIImageView!
     @IBOutlet var thirdTaroImageView: UIImageView!
-    
+
     @IBOutlet var predictionTextView: UITextView!
     @IBOutlet weak var backButton: UIButton!
-    
+
     var name: String!
     var prediction: String!
-    
+
     private let predictionManager = PredictionManager()
     private var isLoadingStarted = false
-    
+
     private var loadingVC: LoadingViewController?
-    
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +59,7 @@ final class PredictionViewController: UIViewController {
         backButton.layer.sublayers?.first?.frame = backButton.bounds
     }
 
+    // MARK: - Prediction Flow
     private func showLoadingAndStartPrediction() {
         let loadingVC = LoadingViewController()
         loadingVC.modalPresentationStyle = .overFullScreen
@@ -69,6 +71,7 @@ final class PredictionViewController: UIViewController {
         }
     }
     
+    // MARK: - UI Setup
     private func setupBackgroundGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -129,7 +132,12 @@ final class PredictionViewController: UIViewController {
             //let prompt = self.predictionManager.generatePrompt(name: self.name ?? "", prediction: self.prediction ?? "")
             
             let cards = self.predictionManager.cards.map { $0.name }
-            let lang = Locale.current.languageCode ?? "en"
+            let lang: String
+            if #available(iOS 16.0, *) {
+                lang = Locale.current.language.languageCode?.identifier ?? "en"
+            } else {
+                lang = Locale.current.languageCode ?? "en"
+            }
             self.predictionManager.callDeepseekAPI(cards: cards, name: self.name ?? "", subject: self.prediction ?? "", lang: lang) { result in
                 DispatchQueue.main.async {
                     switch result {
@@ -255,10 +263,12 @@ final class PredictionViewController: UIViewController {
         backButton.contentHorizontalAlignment = .center
     }
 
+    // MARK: - Actions
     @IBAction func backButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
 
+    // MARK: - Card Interaction
     @objc private func cardTapped(_ sender: UITapGestureRecognizer) {
         guard let tappedImageView = sender.view as? UIImageView,
               let image = tappedImageView.image else { return }

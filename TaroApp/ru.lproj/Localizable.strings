@@ -48,3 +48,8 @@
 "card_upright" = "в прямом положении";
 
 "fullscreen_card_accessibility" = "Карта %@ отображается на весь экран";
+
+
+"empty_name_title" = "Введите имя";
+"empty_name_message" = "Пожалуйста, введите имя перед тем как продолжить.";
+"ok_button" = "ОК";
