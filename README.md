@@ -9,7 +9,7 @@
 
 | Главный экран | Экран загрузки | Результат |
 |:-------------:|:--------------:|:---------:|
-| ![](screenshots/main.png) | ![](screenshots/loading.png) | ![](screenshots/result.png) |
+| ![](screenshots/main.PNG) | ![](screenshots/loading.PNG) | ![](screenshots/result.PNG) |
 
 ---
 
