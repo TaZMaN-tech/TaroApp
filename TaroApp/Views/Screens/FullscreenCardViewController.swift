@@ -12,6 +12,7 @@ final class FullscreenCardViewController: UIViewController {
     // MARK: - Properties
     
     private let card: TarotCard
+    private var hasAppliedRotation = false
     
     // MARK: - UI Elements
     
@@ -85,6 +86,16 @@ final class FullscreenCardViewController: UIViewController {
         displayCard()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Плавное появление
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+            self.cardImageView.alpha = 1
+        }
+    }
+    
+    
     // MARK: - Setup
     
     private func setupUI() {
@@ -148,11 +159,10 @@ final class FullscreenCardViewController: UIViewController {
         
         if let image = UIImage(named: card.imageName) {
             cardImageView.image = image
-            
-            // Если карта перевёрнута - поворачиваем
-            if card.isReversed {
-                cardImageView.transform = CGAffineTransform(rotationAngle: .pi)
-            }
+            // ❌ НЕ применяем transform здесь
+        } else {
+            // Fallback
+            cardImageView.image = UIImage(named: "card_back")
         }
     }
     

@@ -179,9 +179,14 @@ final class PredictionViewController: UIViewController {
         
         view.addSubview(loadingView)
         
-        for _ in 0..<3 {
+        for index in 0..<3 {
             let cardView = TarotCardView()
             cardView.isFlipped = true
+            
+            cardView.onTap = { [weak self] in
+                self?.showCardFullscreen(at: index)
+            }
+            
             cardsStack.addArrangedSubview(cardView)
             cardViews.append(cardView)
         }
@@ -334,6 +339,19 @@ final class PredictionViewController: UIViewController {
         let imageName = isFavorite ? "heart.fill" : "heart"
         favoriteButton.setImage(UIImage(systemName: imageName), for: .normal)
         favoriteButton.tintColor = isFavorite ? .systemPink : .white
+    }
+    
+    // MARK: - Fullscreen Card
+
+    private func showCardFullscreen(at index: Int) {
+        guard index < viewModel.cards.count else { return }
+        
+        let card = viewModel.cards[index]
+        let fullscreenVC = FullscreenCardViewController(card: card)
+        present(fullscreenVC, animated: true)
+        
+        // Haptic feedback
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
     
     // MARK: - Actions
