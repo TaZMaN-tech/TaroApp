@@ -38,6 +38,13 @@ final class HistoryViewController: UIViewController {
         return view
     }()
     
+    private lazy var backgroundView: GradientView = {
+        let view = GradientView()
+        view.colors = [Design.Colors.gradientStart, Design.Colors.gradientEnd]
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     // MARK: - Properties
     
     private let viewModel: HistoryViewModelProtocol
@@ -82,11 +89,17 @@ final class HistoryViewController: UIViewController {
             action: #selector(clearTapped)
         )
         
+        view.addSubview(backgroundView)
         view.addSubview(segmentedControl)
         view.addSubview(tableView)
         view.addSubview(emptyStateView)
         
         NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),

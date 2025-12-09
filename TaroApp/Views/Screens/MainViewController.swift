@@ -90,7 +90,7 @@ final class MainViewController: UIViewController {
     
     private lazy var editNameButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(NSLocalizedString("edit_name_button", comment: ""), for: .normal)
+        button.setTitle("изменить имя", for: .normal)
         button.titleLabel?.font = Design.Fonts.small
         button.setTitleColor(Design.Colors.textSecondary, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -352,7 +352,7 @@ final class MainViewController: UIViewController {
             greetingLabel.isHidden = false
             editNameButton.isHidden = false
             
-            greetingLabel.text = String(format: NSLocalizedString("personalized_greeting_format", comment: ""), viewModel.userName)
+            greetingLabel.text = "Здравствуй, \(viewModel.userName)!\n✨ Какие тайны откроем сегодня?"
             
             // Анимация
             UIView.animate(withDuration: 0.3) {
@@ -427,6 +427,14 @@ final class MainViewController: UIViewController {
 extension MainViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
+        if viewModel.isValidName {
+            viewModel.saveUserName()
+            viewModel.completeNameEntry()
+        } else {
+            showNameRequiredAlert()
+        }
+        
         return true
     }
 }

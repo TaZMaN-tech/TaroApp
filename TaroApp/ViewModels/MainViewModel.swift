@@ -29,6 +29,7 @@ protocol MainViewModelProtocol: AnyObject {
     func loadUserSettings()
     func saveUserName()
     func startEditingName()
+    func completeNameEntry()
 }
 
 // MARK: - Implementation
@@ -79,6 +80,10 @@ final class MainViewModel: MainViewModelProtocol {
     
     func startEditingName() {
         screenState = .onboarding
+    }
+    
+    func completeNameEntry() {
+        screenState = .personalized
     }
     
     func saveUserName() {
