@@ -12,6 +12,8 @@ final class TarotCardView: UIView {
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
     
+    var onTap: (() -> Void)?
+    
     var card: TarotCard? {
         didSet { updateCard() }
     }
@@ -66,6 +68,10 @@ final class TarotCardView: UIView {
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
             nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
         ])
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
+        isUserInteractionEnabled = true
     }
     
     private func updateCard() {
@@ -99,5 +105,17 @@ final class TarotCardView: UIView {
         } completion: { _ in
             completion?()
         }
+    }
+    
+    @objc private func handleTap() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.transform = .identity
+            }
+        }
+        
+        onTap?()
     }
 }
