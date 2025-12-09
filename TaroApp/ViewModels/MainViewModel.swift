@@ -8,17 +8,27 @@
 import Foundation
 import Combine
 
+// MARK: - UI State
+
+enum MainScreenState {
+    case onboarding
+    case personalized
+}
+
 // MARK: - Protocol
 
 protocol MainViewModelProtocol: AnyObject {
     var userName: String { get set }
     var userNamePublisher: Published<String>.Publisher { get }
+    var screenState: MainScreenState { get }
+    var screenStatePublisher: Published<MainScreenState>.Publisher { get }
     var isValidName: Bool { get }
     var spreadTypes: [SpreadType] { get }
     
     func selectSpread(_ type: SpreadType)
     func loadUserSettings()
     func saveUserName()
+    func startEditingName()
 }
 
 // MARK: - Implementation
@@ -26,7 +36,10 @@ protocol MainViewModelProtocol: AnyObject {
 final class MainViewModel: MainViewModelProtocol {
     
     @Published var userName: String = ""
+    @Published private(set) var screenState: MainScreenState = .onboarding
+    
     var userNamePublisher: Published<String>.Publisher { $userName }
+    var screenStatePublisher: Published<MainScreenState>.Publisher { $screenState }
     
     var isValidName: Bool {
         !userName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -42,6 +55,7 @@ final class MainViewModel: MainViewModelProtocol {
         loadUserSettings()
     }
     
+    
     func selectSpread(_ type: SpreadType) {
         guard isValidName else { return }
         saveUserName()
@@ -51,6 +65,15 @@ final class MainViewModel: MainViewModelProtocol {
     func loadUserSettings() {
         let settings = storageService.getUserSettings()
         userName = settings.userName
+        
+        // ← Определяем состояние экрана
+        screenState = userName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        ? .onboarding
+        : .personalized
+    }
+    
+    func startEditingName() {
+        screenState = .onboarding
     }
     
     func saveUserName() {

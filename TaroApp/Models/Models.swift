@@ -173,6 +173,10 @@ struct UserSettings: Codable {
     var isDarkMode: Bool
     var notificationsEnabled: Bool
     
+    var hasUserName: Bool {
+        !userName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
     static var `default`: UserSettings {
         UserSettings(
             userName: "",
