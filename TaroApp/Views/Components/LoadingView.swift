@@ -59,7 +59,7 @@ final class LoadingView: UIView {
         // Card container с рамкой и свечением
         cardContainer.layer.borderColor = UIColor(red: 240/255, green: 160/255, blue: 80/255, alpha: 1).cgColor
         cardContainer.layer.borderWidth = 4
-        cardContainer.layer.cornerRadius = 16
+        cardContainer.layer.cornerRadius = Design.CornerRadius.medium
         cardContainer.layer.shadowColor = UIColor.systemPink.cgColor
         cardContainer.layer.shadowOpacity = 0.8
         cardContainer.layer.shadowRadius = 20
@@ -71,7 +71,7 @@ final class LoadingView: UIView {
         // ImageView для анимации карт
         animationImageView.contentMode = .scaleAspectFill
         animationImageView.clipsToBounds = true
-        animationImageView.layer.cornerRadius = 12
+        animationImageView.layer.cornerRadius = Design.CornerRadius.medium
         animationImageView.translatesAutoresizingMaskIntoConstraints = false
         
         if let placeholderImage = UIImage(named: "card_back") {
