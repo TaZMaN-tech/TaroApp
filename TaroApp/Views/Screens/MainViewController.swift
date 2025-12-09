@@ -67,8 +67,11 @@ final class MainViewController: UIViewController {
         field.placeholder = L10n.tr("placeholder_name")
         field.font = Design.Fonts.body
         field.textAlignment = .center
-        field.backgroundColor = .white
+        field.textColor = Design.Colors.textPrimary
+        field.backgroundColor = Design.Colors.cardBackground
         field.layer.cornerRadius = Design.CornerRadius.medium
+        field.layer.borderWidth = 1
+        field.layer.borderColor = Design.Colors.separator.cgColor
         field.autocorrectionType = .no
         field.returnKeyType = .done
         field.delegate = self

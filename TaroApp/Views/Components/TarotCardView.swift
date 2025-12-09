@@ -33,10 +33,10 @@ final class TarotCardView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .white
+        backgroundColor = Design.Colors.cardBackground
         layer.cornerRadius = Design.CornerRadius.small
         layer.borderWidth = 2
-        layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
+        layer.borderColor = Design.Colors.separator.cgColor
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 4)
         layer.shadowRadius = 8
@@ -50,9 +50,9 @@ final class TarotCardView: UIView {
         addSubview(imageView)
         
         nameLabel.font = Design.Fonts.small
-        nameLabel.textColor = .white
+        nameLabel.textColor = Design.Colors.textPrimary
         nameLabel.textAlignment = .center
-        nameLabel.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        nameLabel.backgroundColor = Design.Colors.textSecondary.withAlphaComponent(0.8)
         nameLabel.layer.cornerRadius = 4
         nameLabel.layer.masksToBounds = true
         nameLabel.translatesAutoresizingMaskIntoConstraints = false

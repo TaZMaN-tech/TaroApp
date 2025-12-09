@@ -217,12 +217,14 @@ final class HistoryCell: UITableViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = Design.Colors.cardBackground
         view.layer.cornerRadius = Design.CornerRadius.medium
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.layer.shadowRadius = 4
-        view.layer.shadowOpacity = 0.1
+        view.layer.shadowRadius = 8
+        view.layer.shadowOpacity = 0.12
+        view.layer.borderWidth = 1
+        view.layer.borderColor = Design.Colors.separator.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

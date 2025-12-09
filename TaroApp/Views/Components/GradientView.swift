@@ -48,4 +48,11 @@ final class GradientView: UIView {
         super.layoutSubviews()
         gradientLayer.frame = bounds
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateGradient()
+        }
+    }
 }

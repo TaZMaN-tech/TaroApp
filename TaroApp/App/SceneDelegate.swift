@@ -30,5 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
+        
+        // Применяем сохранённую тему
+        ThemeManager.shared.applyTheme()
     }
 }

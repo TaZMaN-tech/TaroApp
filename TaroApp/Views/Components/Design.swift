@@ -12,12 +12,80 @@ enum Design {
     // MARK: - Colors
     
     enum Colors {
-        static let textPrimary = UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 1)
-        static let textSecondary = UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 0.7)
-        static let background = UIColor.white
+        // Динамические цвета с поддержкой тёмной темы
+        static var textPrimary: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+                    : UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 1)
+            }
+        }
         
-        static let gradientStart = UIColor(red: 125/255, green: 207/255, blue: 235/255, alpha: 1)
-        static let gradientEnd = UIColor(red: 255/255, green: 184/255, blue: 108/255, alpha: 1)
+        static var textSecondary: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 180/255, green: 180/255, blue: 180/255, alpha: 1)
+                    : UIColor(red: 72/255, green: 58/255, blue: 50/255, alpha: 0.7)
+            }
+        }
+        
+        static var background: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 18/255, green: 18/255, blue: 18/255, alpha: 1)
+                    : .white
+            }
+        }
+        
+        static var cardBackground: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+                    : .white
+            }
+        }
+        
+        static var separator: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 60/255, green: 60/255, blue: 60/255, alpha: 1)
+                    : UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
+            }
+        }
+        
+        // Градиенты (адаптивные)
+        static var gradientStart: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 40/255, green: 100/255, blue: 150/255, alpha: 1)
+                    : UIColor(red: 125/255, green: 207/255, blue: 235/255, alpha: 1)
+            }
+        }
+        
+        static var gradientEnd: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 120/255, green: 60/255, blue: 100/255, alpha: 1)
+                    : UIColor(red: 255/255, green: 184/255, blue: 108/255, alpha: 1)
+            }
+        }
+        
+        // Для таблиц
+        static var cellBackground: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 35/255, green: 35/255, blue: 38/255, alpha: 1)
+                    : UIColor.white
+            }
+        }
+        
+        static var groupedBackground: UIColor {
+            UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark
+                    ? UIColor(red: 18/255, green: 18/255, blue: 18/255, alpha: 1)
+                    : UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1)
+            }
+        }
     }
     
     // MARK: - Fonts

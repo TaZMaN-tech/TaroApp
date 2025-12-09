@@ -37,6 +37,7 @@ final class EmptyStateView: UIView {
         titleLabel.font = Design.Fonts.title
         titleLabel.textColor = Design.Colors.textSecondary
         titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
         stack.addArrangedSubview(titleLabel)
         
         NSLayoutConstraint.activate([

@@ -21,6 +21,7 @@ final class SettingsViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         table.backgroundColor = .clear
+        table.separatorColor = Design.Colors.separator
         table.delegate = self
         table.dataSource = self
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -259,9 +260,9 @@ extension SettingsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
-        cell.backgroundColor = UIColor.white.withAlphaComponent(0.08)
-        cell.textLabel?.textColor = .white
-        cell.detailTextLabel?.textColor = .secondaryLabel
+        cell.backgroundColor = Design.Colors.cellBackground
+        cell.textLabel?.textColor = Design.Colors.textPrimary
+        cell.detailTextLabel?.textColor = Design.Colors.textSecondary
         
         let item = sections[indexPath.section].items[indexPath.row]
         
@@ -274,6 +275,13 @@ extension SettingsViewController: UITableViewDataSource {
             cell.selectionStyle = .none
             cell.detailTextLabel?.text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
             
+        case .darkMode:
+            cell.selectionStyle = .none
+            let toggle = UISwitch()
+            toggle.isOn = settings.isDarkMode
+            toggle.addTarget(self, action: #selector(darkModeToggled(_:)), for: .valueChanged)
+            cell.accessoryView = toggle
+            
         case .language:
             cell.selectionStyle = .none
             let segmented = UISegmentedControl(items: [
@@ -284,7 +292,7 @@ extension SettingsViewController: UITableViewDataSource {
             segmented.addTarget(self, action: #selector(languageChanged(_:)), for: .valueChanged)
             cell.accessoryView = segmented
             
-        case .editName, .darkMode, .clearHistory, .rateApp:
+        case .editName, .clearHistory, .rateApp:
             cell.accessoryType = .disclosureIndicator
         }
         
@@ -299,6 +307,12 @@ extension SettingsViewController: UITableViewDataSource {
             let code = Locale.preferredLanguages.first ?? "ru"
             return code.hasPrefix("ru") ? 0 : 1
         }
+    }
+    
+    @objc private func darkModeToggled(_ sender: UISwitch) {
+        settings.isDarkMode = sender.isOn
+        saveSettings()
+        ThemeManager.shared.isDarkMode = sender.isOn
     }
     
     @objc private func languageChanged(_ sender: UISegmentedControl) {
