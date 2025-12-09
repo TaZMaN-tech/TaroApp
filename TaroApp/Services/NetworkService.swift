@@ -19,13 +19,13 @@ enum NetworkError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return NSLocalizedString("network_invalid_url", comment: "")
+            return L10n.tr("network_invalid_url")
         case .noData:
-            return NSLocalizedString("network_no_data", comment: "")
+            return L10n.tr("network_no_data")
         case .decodingError:
-            return NSLocalizedString("network_decoding_error", comment: "")
+            return L10n.tr("network_decoding_error")
         case .serverError(let code):
-            let format = NSLocalizedString("network_server_error_format", comment: "")
+            let format = L10n.tr("network_server_error_format")
             return String(format: format, code)
         case .networkError(let error):
             return error.localizedDescription

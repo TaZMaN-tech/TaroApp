@@ -67,7 +67,7 @@ final class SettingsViewController: UIViewController {
     // MARK: - Setup
     
     private func setupUI() {
-        title = NSLocalizedString("settings_title", comment: "")
+        title = L10n.tr("settings_title")
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.left"),
@@ -104,20 +104,20 @@ final class SettingsViewController: UIViewController {
     
     private func clearHistory() {
         let alert = UIAlertController(
-            title: NSLocalizedString("history_clear_title", comment: ""),
-            message: NSLocalizedString("history_clear_message", comment: ""),
+            title: L10n.tr("history_clear_title"),
+            message: L10n.tr("history_clear_message"),
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(
-            title: NSLocalizedString("history_clear_cancel", comment: ""),
+            title: L10n.tr("history_clear_cancel"),
             style: .cancel
         ))
         alert.addAction(UIAlertAction(
-            title: NSLocalizedString("history_clear_confirm", comment: ""),
+            title: L10n.tr("history_clear_confirm"),
             style: .destructive
         ) { [weak self] _ in
             self?.storageService.clearHistory()
-            self?.showToast(NSLocalizedString("settings_clear_history_toast", comment: ""))
+            self?.showToast(L10n.tr("settings_clear_history_toast"))
         })
         present(alert, animated: true)
     }
@@ -161,24 +161,24 @@ final class SettingsViewController: UIViewController {
     
     private func showEditNameAlert() {
         let alert = UIAlertController(
-            title: NSLocalizedString("edit_name_alert_title", comment: ""),
-            message: NSLocalizedString("edit_name_alert_message", comment: ""),
+            title: L10n.tr("edit_name_alert_title"),
+            message: L10n.tr("edit_name_alert_message"),
             preferredStyle: .alert
         )
         
         alert.addTextField { textField in
             textField.text = self.settings.userName
-            textField.placeholder = NSLocalizedString("edit_name_placeholder", comment: "")
+            textField.placeholder = L10n.tr("edit_name_placeholder")
             textField.autocapitalizationType = .words
         }
         
         alert.addAction(UIAlertAction(
-            title: NSLocalizedString("cancel_button", comment: ""),
+            title: L10n.tr("cancel_button"),
             style: .cancel
         ))
         
         alert.addAction(UIAlertAction(
-            title: NSLocalizedString("edit_name_save", comment: ""),
+            title: L10n.tr("edit_name_save"),
             style: .default
         ) { [weak self, weak alert] _ in
             guard let self = self,
@@ -189,7 +189,7 @@ final class SettingsViewController: UIViewController {
             self.settings.userName = newName
             self.saveSettings()
             self.tableView.reloadData()
-            self.showToast(NSLocalizedString("name_updated_toast", comment: ""))
+            self.showToast(L10n.tr("name_updated_toast"))
         })
         
         present(alert, animated: true)
@@ -208,12 +208,12 @@ private enum SettingsItem {
     
     var title: String {
         switch self {
-        case .editName:    return NSLocalizedString("settings_edit_name", comment: "")
-        case .darkMode:    return NSLocalizedString("settings_dark_mode", comment: "")
-        case .language:    return NSLocalizedString("settings_language", comment: "")
-        case .clearHistory:return NSLocalizedString("settings_clear_history", comment: "")
-        case .version:     return NSLocalizedString("settings_version", comment: "")
-        case .rateApp:     return NSLocalizedString("settings_rate_app", comment: "")
+        case .editName:    return L10n.tr("settings_edit_name")
+        case .darkMode:    return L10n.tr("settings_dark_mode")
+        case .language:    return L10n.tr("settings_language")
+        case .clearHistory:return L10n.tr("settings_clear_history")
+        case .version:     return L10n.tr("settings_version")
+        case .rateApp:     return L10n.tr("settings_rate_app")
         }
     }
     
@@ -254,7 +254,7 @@ extension SettingsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionInfo = sections[section]
-        return NSLocalizedString(sectionInfo.titleKey, comment: "")
+        return L10n.tr(sectionInfo.titleKey)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -277,8 +277,8 @@ extension SettingsViewController: UITableViewDataSource {
         case .language:
             cell.selectionStyle = .none
             let segmented = UISegmentedControl(items: [
-                NSLocalizedString("settings_language_ru_short", comment: ""),
-                NSLocalizedString("settings_language_en_short", comment: "")
+                L10n.tr("settings_language_ru_short"),
+                L10n.tr("settings_language_en_short")
             ])
             segmented.selectedSegmentIndex = selectedLanguageSegmentIndex()
             segmented.addTarget(self, action: #selector(languageChanged(_:)), for: .valueChanged)
@@ -307,7 +307,7 @@ extension SettingsViewController: UITableViewDataSource {
         saveSettings()
         LanguageManager.shared.currentLanguage = newLanguage
         
-        showToast(NSLocalizedString("settings_language_restart_toast", comment: ""))
+        showToast(L10n.tr("settings_language_restart_toast"))
     }
 }
 

@@ -16,8 +16,8 @@ enum HistoryTab: Int, CaseIterable {
 
     var title: String {
         switch self {
-        case .all:       return NSLocalizedString("history_tab_all", comment: "")
-        case .favorites: return NSLocalizedString("history_tab_favorites", comment: "")
+        case .all:       return L10n.tr("history_tab_all")
+        case .favorites: return L10n.tr("history_tab_favorites")
         }
     }
 }

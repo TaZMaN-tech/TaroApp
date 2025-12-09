@@ -43,7 +43,7 @@ final class MainViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = NSLocalizedString("app_title", comment: "")
+        label.text = L10n.tr("app_title")
         label.font = Design.Fonts.largeTitle
         label.textColor = Design.Colors.textPrimary
         label.textAlignment = .center
@@ -53,7 +53,7 @@ final class MainViewController: UIViewController {
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = NSLocalizedString("greeting_text", comment: "")
+        label.text = L10n.tr("greeting_text")
         label.font = Design.Fonts.body
         label.textColor = Design.Colors.textSecondary
         label.textAlignment = .center
@@ -64,7 +64,7 @@ final class MainViewController: UIViewController {
     
     private lazy var nameTextField: UITextField = {
         let field = UITextField()
-        field.placeholder = NSLocalizedString("placeholder_name", comment: "")
+        field.placeholder = L10n.tr("placeholder_name")
         field.font = Design.Fonts.body
         field.textAlignment = .center
         field.backgroundColor = .white
@@ -90,7 +90,7 @@ final class MainViewController: UIViewController {
     
     private lazy var editNameButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(NSLocalizedString("edit_name_button", comment: ""), for: .normal)
+        button.setTitle(L10n.tr("edit_name_button"), for: .normal)
         button.titleLabel?.font = Design.Fonts.small
         button.setTitleColor(Design.Colors.textSecondary, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -352,7 +352,7 @@ final class MainViewController: UIViewController {
             greetingLabel.isHidden = false
             editNameButton.isHidden = false
             
-            let format = NSLocalizedString("personalized_greeting_format", comment: "")
+            let format = L10n.tr("personalized_greeting_format")
             greetingLabel.text = String(format: format, viewModel.userName)
             
             // Анимация
@@ -407,11 +407,11 @@ final class MainViewController: UIViewController {
         }
         
         let alert = UIAlertController(
-            title: NSLocalizedString("empty_name_title", comment: ""),
-            message: NSLocalizedString("empty_name_message", comment: ""),
+            title: L10n.tr("empty_name_title"),
+            message: L10n.tr("empty_name_message"),
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: NSLocalizedString("ok_button", comment: ""), style: .default) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: L10n.tr("ok_button"), style: .default) { [weak self] _ in
             self?.nameTextField.becomeFirstResponder()
         })
         present(alert, animated: true)

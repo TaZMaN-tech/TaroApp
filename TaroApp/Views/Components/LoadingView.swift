@@ -19,11 +19,11 @@ final class LoadingView: UIView {
     private var starsTimer: Timer?
     
     private lazy var tips: [String] = [
-        NSLocalizedString("loading_tip_1", comment: ""),
-        NSLocalizedString("loading_tip_2", comment: ""),
-        NSLocalizedString("loading_tip_3", comment: ""),
-        NSLocalizedString("loading_tip_4", comment: ""),
-        NSLocalizedString("loading_tip_5", comment: "")
+        L10n.tr("loading_tip_1"),
+        L10n.tr("loading_tip_2"),
+        L10n.tr("loading_tip_3"),
+        L10n.tr("loading_tip_4"),
+        L10n.tr("loading_tip_5")
     ]
     
     // MARK: - Init

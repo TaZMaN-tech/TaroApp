@@ -98,7 +98,7 @@ final class PredictionDetailViewController: UIViewController {
     }
     
     private func setupUI() {
-        title = NSLocalizedString("prediction_detail_title", comment: "")
+        title = L10n.tr("prediction_detail_title")
         view.backgroundColor = .systemBackground
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(

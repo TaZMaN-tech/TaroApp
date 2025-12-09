@@ -42,7 +42,7 @@ final class OnboardingViewController: UIViewController {
     
     private lazy var skipButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(NSLocalizedString("onboarding_skip", comment: ""), for: .normal)
+        button.setTitle(L10n.tr("onboarding_skip"), for: .normal)
         button.setTitleColor(Design.Colors.textPrimary.withAlphaComponent(0.7), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(skipTapped), for: .touchUpInside)
@@ -51,7 +51,7 @@ final class OnboardingViewController: UIViewController {
     
     private lazy var nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(NSLocalizedString("onboarding_next", comment: ""), for: .normal)
+        button.setTitle(L10n.tr("onboarding_next"), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = Design.Fonts.caption
         button.backgroundColor = Design.Colors.textPrimary
@@ -154,14 +154,14 @@ final class OnboardingViewController: UIViewController {
         iconLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let titleLabel = UILabel()
-        titleLabel.text = NSLocalizedString(titleKey, comment: "")
+        titleLabel.text = L10n.tr(titleKey)
         titleLabel.font = Design.Fonts.largeTitle
         titleLabel.textColor = Design.Colors.textPrimary
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let subtitleLabel = UILabel()
-        subtitleLabel.text = NSLocalizedString(subtitleKey, comment: "")
+        subtitleLabel.text = L10n.tr(subtitleKey)
         subtitleLabel.font = Design.Fonts.body
         subtitleLabel.textColor = Design.Colors.textSecondary
         subtitleLabel.textAlignment = .center
@@ -191,7 +191,7 @@ final class OnboardingViewController: UIViewController {
         let isLastPage = currentPage == pages.count - 1
         
         let nextTitleKey = isLastPage ? "onboarding_start" : "onboarding_next"
-        nextButton.setTitle(NSLocalizedString(nextTitleKey, comment: ""), for: .normal)
+        nextButton.setTitle(L10n.tr(nextTitleKey), for: .normal)
         
         skipButton.alpha = isLastPage ? 0 : 1
     }

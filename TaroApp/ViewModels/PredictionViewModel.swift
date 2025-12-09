@@ -102,7 +102,7 @@ final class PredictionViewModel: PredictionViewModelProtocol {
         
         let cardsText = prediction.cards.map { $0.displayName }.joined(separator: ", ")
         
-        let template = NSLocalizedString("share_prediction_template", comment: "")
+        let template = L10n.tr("share_prediction_template")
         return String(
             format: template,
             prediction.spreadType.title,

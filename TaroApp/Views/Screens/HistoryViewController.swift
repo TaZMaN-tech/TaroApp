@@ -14,8 +14,8 @@ final class HistoryViewController: UIViewController {
     
     private lazy var segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: [
-            NSLocalizedString("history_tab_all", comment: ""),
-            NSLocalizedString("history_tab_favorites", comment: "")
+            L10n.tr("history_tab_all"),
+            L10n.tr("history_tab_favorites")
         ])
         
         control.selectedSegmentIndex = 0
@@ -82,7 +82,7 @@ final class HistoryViewController: UIViewController {
     // MARK: - Setup
     
     private func setupUI() {
-        title = NSLocalizedString("history_title", comment: "")
+        title = L10n.tr("history_title")
         view.backgroundColor = .systemBackground
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -136,7 +136,7 @@ final class HistoryViewController: UIViewController {
             let isAllTab = viewModel.selectedTab == .all
             emptyStateView.configure(
                 icon: isAllTab ? "🔮" : "❤️",
-                title: isAllTab ? NSLocalizedString("history_empty_all_title", comment: "") : NSLocalizedString("history_empty_favorites_title", comment: "")
+                title: isAllTab ? L10n.tr("history_empty_all_title") : L10n.tr("history_empty_favorites_title")
             )
         }
     }
@@ -149,12 +149,12 @@ final class HistoryViewController: UIViewController {
     
     @objc private func clearTapped() {
         let alert = UIAlertController(
-            title: NSLocalizedString("history_clear_title", comment: ""),
-            message: NSLocalizedString("history_clear_message", comment: ""),
+            title: L10n.tr("history_clear_title"),
+            message: L10n.tr("history_clear_message"),
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: NSLocalizedString("history_clear_cancel", comment: ""), style: .cancel))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("history_clear_confirm", comment: ""), style: .destructive) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: L10n.tr("history_clear_cancel"), style: .cancel))
+        alert.addAction(UIAlertAction(title: L10n.tr("history_clear_confirm"), style: .destructive) { [weak self] _ in
             self?.viewModel.clearHistory()
         })
         present(alert, animated: true)
@@ -187,7 +187,7 @@ extension HistoryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: NSLocalizedString("history_clear_confirm", comment: "")) { [weak self] _, _, completion in
+        let deleteAction = UIContextualAction(style: .destructive, title: L10n.tr("history_clear_confirm")) { [weak self] _, _, completion in
             self?.viewModel.deletePrediction(at: indexPath.row)
             completion(true)
         }
@@ -302,7 +302,7 @@ final class HistoryCell: UITableViewCell {
     
     func configure(with prediction: Prediction) {
         iconLabel.text = prediction.spreadType.icon
-        let format = NSLocalizedString("history_cell_title_format", comment: "")
+        let format = L10n.tr("history_cell_title_format")
         titleLabel.text = String(format: format, prediction.spreadType.title, prediction.userName)
         
         subtitleLabel.text = HistoryCell.dateFormatter.string(from: prediction.createdAt)

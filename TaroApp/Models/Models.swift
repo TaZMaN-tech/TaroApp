@@ -14,9 +14,9 @@ enum AppLanguage: String, Codable, CaseIterable {
     
     var title: String {
         switch self {
-        case .system: return NSLocalizedString("settings_language_system", comment: "")
-        case .ru:     return NSLocalizedString("settings_language_ru", comment: "")
-        case .en:     return NSLocalizedString("settings_language_en", comment: "")
+        case .system: return L10n.tr("settings_language_system")
+        case .ru:     return L10n.tr("settings_language_ru")
+        case .en:     return L10n.tr("settings_language_en")
         }
     }
     
@@ -42,7 +42,7 @@ struct TarotCard: Codable, Identifiable {
     
     var displayName: String {
         if isReversed {
-            let format = NSLocalizedString("card_reversed_format", comment: "") // "%@ (reversed)" / "%@ (перевёрнута)"
+            let format = L10n.tr("card_reversed_format") // "%@ (reversed)" / "%@ (перевёрнута)"
             return String(format: format, name)
         } else {
             return name
@@ -113,14 +113,14 @@ enum SpreadType: String, CaseIterable, Codable {
     
     var title: String {
         switch self {
-        case .love:     return NSLocalizedString("love_button",   comment: "")
-        case .career:   return NSLocalizedString("job_button",    comment: "")
-        case .dayCard:  return NSLocalizedString("day_button",    comment: "")
-        case .future:   return NSLocalizedString("future_button", comment: "")
-        case .harmony:  return NSLocalizedString("self_button",   comment: "")
-        case .health:   return NSLocalizedString("health_button", comment: "")
-        case .karma:    return NSLocalizedString("karma_button",  comment: "")
-        case .vacation: return NSLocalizedString("vacation_button", comment: "")
+        case .love:     return L10n.tr("love_button")
+        case .career:   return L10n.tr("job_button")
+        case .dayCard:  return L10n.tr("day_button")
+        case .future:   return L10n.tr("future_button")
+        case .harmony:  return L10n.tr("self_button")
+        case .health:   return L10n.tr("health_button")
+        case .karma:    return L10n.tr("karma_button")
+        case .vacation: return L10n.tr("vacation_button")
         }
     }
     
