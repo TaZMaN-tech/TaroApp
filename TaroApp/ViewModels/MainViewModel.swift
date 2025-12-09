@@ -59,6 +59,11 @@ final class MainViewModel: MainViewModelProtocol {
     func selectSpread(_ type: SpreadType) {
         guard isValidName else { return }
         saveUserName()
+        
+        if screenState == .onboarding {
+            screenState = .personalized
+        }
+        
         coordinator?.showPrediction(for: type, userName: userName.trimmingCharacters(in: .whitespacesAndNewlines))
     }
     
