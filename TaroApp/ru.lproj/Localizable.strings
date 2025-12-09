@@ -53,3 +53,10 @@
 "empty_name_title" = "Введите имя";
 "empty_name_message" = "Пожалуйста, введите имя перед тем как продолжить.";
 "ok_button" = "ОК";
+
+"personalized_greeting_format" = "Здравствуй, %@!\n✨ Какие тайны откроем сегодня?";
+"edit_name_button" = "изменить имя";
+"edit_name_alert_title" = "Изменить имя";
+"edit_name_alert_message" = "Введите новое имя";
+"edit_name_save" = "Сохранить";
+"name_updated_toast" = "Имя обновлено";

@@ -156,8 +156,8 @@ final class SettingsViewController: UIViewController {
     
     private func showEditNameAlert() {
         let alert = UIAlertController(
-            title: "Изменить имя",
-            message: "Введите новое имя",
+            title: NSLocalizedString("edit_name_alert_title", comment: ""),
+            message: NSLocalizedString("edit_name_alert_message", comment: ""),
             preferredStyle: .alert
         )
         
@@ -168,7 +168,7 @@ final class SettingsViewController: UIViewController {
         }
         
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak self, weak alert] _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("edit_name_save", comment: ""), style: .default) { [weak self, weak alert] _ in
             guard let self = self,
                   let textField = alert?.textFields?.first,
                   let newName = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -177,7 +177,7 @@ final class SettingsViewController: UIViewController {
             self.settings.userName = newName
             self.saveSettings()
             self.tableView.reloadData()
-            self.showToast("Имя обновлено")
+            self.showToast(NSLocalizedString("name_updated_toast", comment: ""))
         })
         
         present(alert, animated: true)

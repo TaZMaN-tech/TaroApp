@@ -52,3 +52,10 @@
 "empty_name_title" = "Enter Name";
 "empty_name_message" = "Please enter your name before proceeding.";
 "ok_button" = "OK";
+
+"personalized_greeting_format" = "Hello, %@!\n✨ What mysteries shall we unveil today?";
+"edit_name_button" = "edit name";
+"edit_name_alert_title" = "Edit Name";
+"edit_name_alert_message" = "Enter your new name";
+"edit_name_save" = "Save";
+"name_updated_toast" = "Name updated";
