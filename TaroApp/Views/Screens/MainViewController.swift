@@ -76,6 +76,36 @@ final class MainViewController: UIViewController {
         return field
     }()
     
+    // MARK: - Personalized State UI (новые элементы)
+    
+    private lazy var greetingLabel: UILabel = {
+        let label = UILabel()
+        label.font = Design.Fonts.title
+        label.textColor = Design.Colors.textPrimary
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var editNameButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("изменить имя", for: .normal)
+        button.titleLabel?.font = Design.Fonts.small
+        button.setTitleColor(Design.Colors.textSecondary, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(editNameTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Container для переключения состояний
+    
+    private lazy var headerContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var buttonsGrid: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -143,8 +173,14 @@ final class MainViewController: UIViewController {
         contentView.addSubview(settingsButton)
         contentView.addSubview(logoLabel)
         contentView.addSubview(titleLabel)
-        contentView.addSubview(subtitleLabel)
-        contentView.addSubview(nameTextField)
+        
+        contentView.addSubview(headerContainer)
+        
+        headerContainer.addSubview(subtitleLabel)
+        headerContainer.addSubview(nameTextField)
+        headerContainer.addSubview(greetingLabel)
+        headerContainer.addSubview(editNameButton)
+        
         contentView.addSubview(buttonsGrid)
     }
     
@@ -182,16 +218,31 @@ final class MainViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: logoLabel.bottomAnchor, constant: Design.Spacing.m),
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Design.Spacing.s),
-            subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Design.Spacing.xxl),
-            subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Design.Spacing.xxl),
+            headerContainer.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Design.Spacing.s),
+            headerContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Design.Spacing.l),
+            headerContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Design.Spacing.l),
+            headerContainer.heightAnchor.constraint(equalToConstant: 120),
+            
+            // Onboarding State UI
+            subtitleLabel.topAnchor.constraint(equalTo: headerContainer.topAnchor),
+            subtitleLabel.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: Design.Spacing.l),
+            subtitleLabel.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor, constant: -Design.Spacing.l),
             
             nameTextField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: Design.Spacing.xl),
-            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Design.Spacing.l),
-            nameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Design.Spacing.l),
+            nameTextField.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
+            nameTextField.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor),
             nameTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            buttonsGrid.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: Design.Spacing.xl),
+            // Personalized State UI
+            greetingLabel.centerXAnchor.constraint(equalTo: headerContainer.centerXAnchor),
+            greetingLabel.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor, constant: -10),
+            greetingLabel.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: Design.Spacing.l),
+            greetingLabel.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor, constant: -Design.Spacing.l),
+            
+            editNameButton.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: Design.Spacing.xs),
+            editNameButton.centerXAnchor.constraint(equalTo: headerContainer.centerXAnchor),
+            
+            buttonsGrid.topAnchor.constraint(equalTo: headerContainer.bottomAnchor, constant: Design.Spacing.xl),
             buttonsGrid.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Design.Spacing.l),
             buttonsGrid.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Design.Spacing.l),
             buttonsGrid.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Design.Spacing.xxl)
@@ -247,12 +298,60 @@ final class MainViewController: UIViewController {
     private func setupBindings() {
         nameTextField.text = viewModel.userName
         nameTextField.addTarget(self, action: #selector(nameTextFieldChanged), for: .editingChanged)
+        
+        // ← Подписываемся на изменения состояния
+        viewModel.screenStatePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.updateUIForState(state)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupKeyboardDismiss() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+    }
+    
+    // MARK: - State Management
+    
+    private func updateUIForState(_ state: MainScreenState) {
+        switch state {
+        case .onboarding:
+            // Показываем onboarding UI
+            subtitleLabel.isHidden = false
+            nameTextField.isHidden = false
+            
+            // Скрываем personalized UI
+            greetingLabel.isHidden = true
+            editNameButton.isHidden = true
+            
+            // Можно добавить анимацию
+            UIView.animate(withDuration: 0.3) {
+                self.subtitleLabel.alpha = 1
+                self.nameTextField.alpha = 1
+                self.greetingLabel.alpha = 0
+                self.editNameButton.alpha = 0
+            }
+            
+        case .personalized:
+            subtitleLabel.isHidden = true
+            nameTextField.isHidden = true
+            
+            greetingLabel.isHidden = false
+            editNameButton.isHidden = false
+            
+            greetingLabel.text = "Здравствуй, \(viewModel.userName)!\n✨ Какие тайны откроем сегодня?"
+            
+            // Анимация
+            UIView.animate(withDuration: 0.3) {
+                self.subtitleLabel.alpha = 0
+                self.nameTextField.alpha = 0
+                self.greetingLabel.alpha = 1
+                self.editNameButton.alpha = 1
+            }
+        }
     }
     
     // MARK: - Actions
@@ -270,7 +369,6 @@ final class MainViewController: UIViewController {
             showNameRequiredAlert()
             return
         }
-        
         let spreadType = viewModel.spreadTypes[sender.tag]
         viewModel.selectSpread(spreadType)
     }
@@ -281,6 +379,13 @@ final class MainViewController: UIViewController {
     
     @objc private func settingsTapped() {
         (viewModel as? MainViewModel)?.coordinator?.showSettings()
+    }
+    
+    @objc private func editNameTapped() {
+        viewModel.startEditingName()
+        
+        // Опционально: сразу активируем клавиатуру
+        nameTextField.becomeFirstResponder()
     }
     
     private func showNameRequiredAlert() {
