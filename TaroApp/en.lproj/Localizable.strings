@@ -9,6 +9,25 @@
 /* App title */
 "app_title" = "Tarot";
 
+/* Main screen */
+"greeting_text" = "Enter your name to start";
+"placeholder_name" = "Your name";
+"personalized_greeting_format" = "Hello, %@!\n✨ What secrets shall we unveil today?";
+"edit_name_button" = "change name";
+"empty_name_title" = "Enter name";
+"empty_name_message" = "Please introduce yourself to the cards";
+"ok_button" = "OK";
+
+/* Spread buttons */
+"love_button" = "Love";
+"job_button" = "Career";
+"day_button" = "Day";
+"future_button" = "Future";
+"self_button" = "Harmony";
+"health_button" = "Health";
+"karma_button" = "Karma";
+"vacation_button" = "Vacation";
+
 /* Spread titles */
 "spread_title_love" = "Love";
 "spread_title_career" = "Career";

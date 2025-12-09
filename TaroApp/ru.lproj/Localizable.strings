@@ -9,6 +9,25 @@
 /* App title */
 "app_title" = "Таро";
 
+/* Main screen */
+"greeting_text" = "Введите своё имя, чтобы начать";
+"placeholder_name" = "Ваше имя";
+"personalized_greeting_format" = "Здравствуй, %@!\n✨ Какие тайны откроем сегодня?";
+"edit_name_button" = "изменить имя";
+"empty_name_title" = "Введите имя";
+"empty_name_message" = "Пожалуйста, представьтесь картам";
+"ok_button" = "OK";
+
+/* Spread buttons */
+"love_button" = "Любовь";
+"job_button" = "Карьера";
+"day_button" = "День";
+"future_button" = "Будущее";
+"self_button" = "Гармония";
+"health_button" = "Здоровье";
+"karma_button" = "Карма";
+"vacation_button" = "Отпуск";
+
 /* Spread titles */
 "spread_title_love" = "Любовь";
 "spread_title_career" = "Карьера";
