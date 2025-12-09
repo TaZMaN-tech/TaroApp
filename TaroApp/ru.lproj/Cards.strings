@@ -1,0 +1,94 @@
+/* 
+  Cards.strings
+  TaroApp - Локализация названий карт Таро
+  
+  Created by Тадевос Курдоглян on 09.12.2025.
+*/
+
+/* Major Arcana - Старшие Арканы */
+"card_the_fool" = "Шут";
+"card_the_magician" = "Маг";
+"card_the_high_priestess" = "Верховная Жрица";
+"card_the_empress" = "Императрица";
+"card_the_emperor" = "Император";
+"card_the_hierophant" = "Иерофант";
+"card_the_lovers" = "Влюблённые";
+"card_the_chariot" = "Колесница";
+"card_strength" = "Сила";
+"card_the_hermit" = "Отшельник";
+"card_the_wheel_of_fortune" = "Колесо Фортуны";
+"card_justice" = "Справедливость";
+"card_the_hanged_man" = "Повешенный";
+"card_death" = "Смерть";
+"card_temperance" = "Умеренность";
+"card_the_devil" = "Дьявол";
+"card_the_tower" = "Башня";
+"card_the_star" = "Звезда";
+"card_the_moon" = "Луна";
+"card_the_sun" = "Солнце";
+"card_judgement" = "Суд";
+"card_the_world" = "Мир";
+
+/* Wands - Жезлы */
+"card_ace_of_wands" = "Туз Жезлов";
+"card_two_of_wands" = "Двойка Жезлов";
+"card_three_of_wands" = "Тройка Жезлов";
+"card_four_of_wands" = "Четвёрка Жезлов";
+"card_five_of_wands" = "Пятёрка Жезлов";
+"card_six_of_wands" = "Шестёрка Жезлов";
+"card_seven_of_wands" = "Семёрка Жезлов";
+"card_eight_of_wands" = "Восьмёрка Жезлов";
+"card_nine_of_wands" = "Девятка Жезлов";
+"card_ten_of_wands" = "Десятка Жезлов";
+"card_page_of_wands" = "Паж Жезлов";
+"card_knight_of_wands" = "Рыцарь Жезлов";
+"card_queen_of_wands" = "Королева Жезлов";
+"card_king_of_wands" = "Король Жезлов";
+
+/* Cups - Кубки */
+"card_ace_of_cups" = "Туз Кубков";
+"card_two_of_cups" = "Двойка Кубков";
+"card_three_of_cups" = "Тройка Кубков";
+"card_four_of_cups" = "Четвёрка Кубков";
+"card_five_of_cups" = "Пятёрка Кубков";
+"card_six_of_cups" = "Шестёрка Кубков";
+"card_seven_of_cups" = "Семёрка Кубков";
+"card_eight_of_cups" = "Восьмёрка Кубков";
+"card_nine_of_cups" = "Девятка Кубков";
+"card_ten_of_cups" = "Десятка Кубков";
+"card_page_of_cups" = "Паж Кубков";
+"card_knight_of_cups" = "Рыцарь Кубков";
+"card_queen_of_cups" = "Королева Кубков";
+"card_king_of_cups" = "Король Кубков";
+
+/* Swords - Мечи */
+"card_ace_of_swords" = "Туз Мечей";
+"card_two_of_swords" = "Двойка Мечей";
+"card_three_of_swords" = "Тройка Мечей";
+"card_four_of_swords" = "Четвёрка Мечей";
+"card_five_of_swords" = "Пятёрка Мечей";
+"card_six_of_swords" = "Шестёрка Мечей";
+"card_seven_of_swords" = "Семёрка Мечей";
+"card_eight_of_swords" = "Восьмёрка Мечей";
+"card_nine_of_swords" = "Девятка Мечей";
+"card_ten_of_swords" = "Десятка Мечей";
+"card_page_of_swords" = "Паж Мечей";
+"card_knight_of_swords" = "Рыцарь Мечей";
+"card_queen_of_swords" = "Королева Мечей";
+"card_king_of_swords" = "Король Мечей";
+
+/* Pentacles - Пентакли */
+"card_ace_of_pentacles" = "Туз Пентаклей";
+"card_two_of_pentacles" = "Двойка Пентаклей";
+"card_three_of_pentacles" = "Тройка Пентаклей";
+"card_four_of_pentacles" = "Четвёрка Пентаклей";
+"card_five_of_pentacles" = "Пятёрка Пентаклей";
+"card_six_of_pentacles" = "Шестёрка Пентаклей";
+"card_seven_of_pentacles" = "Семёрка Пентаклей";
+"card_eight_of_pentacles" = "Восьмёрка Пентаклей";
+"card_nine_of_pentacles" = "Девятка Пентаклей";
+"card_ten_of_pentacles" = "Десятка Пентаклей";
+"card_page_of_pentacles" = "Паж Пентаклей";
+"card_knight_of_pentacles" = "Рыцарь Пентаклей";
+"card_queen_of_pentacles" = "Королева Пентаклей";
+"card_king_of_pentacles" = "Король Пентаклей";

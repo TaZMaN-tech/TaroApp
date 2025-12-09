@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C0003BC12DB0231A00D1D069 /* YandexMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = C0003BC02DB0231A00D1D069 /* YandexMobileAds */; };
+		C0EC44A22EE872B200F6D749 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C0EC44A12EE872B200F6D749 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0003BC12DB0231A00D1D069 /* YandexMobileAds in Frameworks */,
+				C0EC44A22EE872B200F6D749 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,7 @@
 			name = TaroApp;
 			packageProductDependencies = (
 				C0003BC02DB0231A00D1D069 /* YandexMobileAds */,
+				C0EC44A12EE872B200F6D749 /* Lottie */,
 			);
 			productName = TaroApp;
 			productReference = C05E2E552D8A9E8800BDCFBB /* TaroApp.app */;
@@ -116,6 +119,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C0003BBF2DB0231A00D1D069 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */,
+				C0EC44A02EE872B200F6D749 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C05E2E562D8A9E8800BDCFBB /* Products */;
@@ -366,6 +370,14 @@
 				minimumVersion = 7.12.1;
 			};
 		};
+		C0EC44A02EE872B200F6D749 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -373,6 +385,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C0003BBF2DB0231A00D1D069 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
 			productName = YandexMobileAds;
+		};
+		C0EC44A12EE872B200F6D749 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0EC44A02EE872B200F6D749 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

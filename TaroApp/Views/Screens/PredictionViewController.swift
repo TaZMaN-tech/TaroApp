@@ -368,8 +368,34 @@ final class PredictionViewController: UIViewController {
     
     @objc private func shareTapped() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        guard let text = viewModel.sharePrediction() else { return }
-        let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        
+        // Показываем action sheet с выбором
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // Поделиться текстом
+        alert.addAction(UIAlertAction(title: "Поделиться текстом", style: .default) { [weak self] _ in
+            guard let text = self?.viewModel.sharePrediction() else { return }
+            let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+            self?.present(activityVC, animated: true)
+        })
+        
+        // Поделиться картинкой
+        alert.addAction(UIAlertAction(title: "Поделиться картинкой 📸", style: .default) { [weak self] _ in
+            self?.shareImage()
+        })
+        
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+        
+        present(alert, animated: true)
+    }
+    
+    private func shareImage() {
+        guard case .loaded(let prediction) = viewModel.state,
+              let image = ShareImageGenerator.generateImage(for: prediction) else {
+            return
+        }
+        
+        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         present(activityVC, animated: true)
     }
     

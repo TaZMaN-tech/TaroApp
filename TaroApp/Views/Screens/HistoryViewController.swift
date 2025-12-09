@@ -91,12 +91,23 @@ final class HistoryViewController: UIViewController {
         title = L10n.tr("history_title")
         view.backgroundColor = .systemBackground
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        // Кнопка статистики
+        let statsButton = UIBarButtonItem(
+            image: UIImage(systemName: "chart.bar.fill"),
+            style: .plain,
+            target: self,
+            action: #selector(showStatistics)
+        )
+        
+        // Кнопка удаления
+        let clearButton = UIBarButtonItem(
             image: UIImage(systemName: "trash"),
             style: .plain,
             target: self,
             action: #selector(clearTapped)
         )
+        
+        navigationItem.rightBarButtonItems = [clearButton, statsButton]
         
         view.addSubview(backgroundView)
         view.addSubview(segmentedControl)
@@ -175,6 +186,12 @@ final class HistoryViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.tableView.refreshControl?.endRefreshing()
         }
+    }
+    
+    @objc private func showStatistics() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        let statisticsVC = StatisticsViewController()
+        navigationController?.pushViewController(statisticsVC, animated: true)
     }
 }
 
@@ -365,9 +382,9 @@ final class HistoryCell: UITableViewCell {
         
         dateLabel.text = HistoryCell.dateFormatter.string(from: prediction.createdAt)
         
-        // Форматируем карты
+        // Форматируем карты с локализацией
         let cardNames = prediction.cards.map { card in
-            card.isReversed ? "\(card.name) ⟲" : card.name
+            card.isReversed ? "\(card.localizedName) ⟲" : card.localizedName
         }.joined(separator: " • ")
         cardsLabel.text = "🃏 \(cardNames)"
         

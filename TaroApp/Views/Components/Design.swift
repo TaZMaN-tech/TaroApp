@@ -53,20 +53,24 @@ enum Design {
             }
         }
         
-        // Градиенты (адаптивные)
+        // Градиенты (адаптивные + время суток)
         static var gradientStart: UIColor {
             UIColor { traitCollection in
-                traitCollection.userInterfaceStyle == .dark
-                    ? UIColor(red: 40/255, green: 100/255, blue: 150/255, alpha: 1)
-                    : UIColor(red: 125/255, green: 207/255, blue: 235/255, alpha: 1)
+                if traitCollection.userInterfaceStyle == .dark {
+                    return TimeBasedGradients.shared.darkStart
+                } else {
+                    return TimeBasedGradients.shared.lightStart
+                }
             }
         }
         
         static var gradientEnd: UIColor {
             UIColor { traitCollection in
-                traitCollection.userInterfaceStyle == .dark
-                    ? UIColor(red: 120/255, green: 60/255, blue: 100/255, alpha: 1)
-                    : UIColor(red: 255/255, green: 184/255, blue: 108/255, alpha: 1)
+                if traitCollection.userInterfaceStyle == .dark {
+                    return TimeBasedGradients.shared.darkEnd
+                } else {
+                    return TimeBasedGradients.shared.lightEnd
+                }
             }
         }
         

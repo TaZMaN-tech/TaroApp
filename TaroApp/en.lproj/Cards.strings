@@ -1,0 +1,94 @@
+/* 
+  Cards.strings
+  TaroApp - Tarot Card Names Localization
+  
+  Created by Тадевос Курдоглян on 09.12.2025.
+*/
+
+/* Major Arcana */
+"card_the_fool" = "The Fool";
+"card_the_magician" = "The Magician";
+"card_the_high_priestess" = "The High Priestess";
+"card_the_empress" = "The Empress";
+"card_the_emperor" = "The Emperor";
+"card_the_hierophant" = "The Hierophant";
+"card_the_lovers" = "The Lovers";
+"card_the_chariot" = "The Chariot";
+"card_strength" = "Strength";
+"card_the_hermit" = "The Hermit";
+"card_the_wheel_of_fortune" = "The Wheel of Fortune";
+"card_justice" = "Justice";
+"card_the_hanged_man" = "The Hanged Man";
+"card_death" = "Death";
+"card_temperance" = "Temperance";
+"card_the_devil" = "The Devil";
+"card_the_tower" = "The Tower";
+"card_the_star" = "The Star";
+"card_the_moon" = "The Moon";
+"card_the_sun" = "The Sun";
+"card_judgement" = "Judgement";
+"card_the_world" = "The World";
+
+/* Wands */
+"card_ace_of_wands" = "Ace of Wands";
+"card_two_of_wands" = "Two of Wands";
+"card_three_of_wands" = "Three of Wands";
+"card_four_of_wands" = "Four of Wands";
+"card_five_of_wands" = "Five of Wands";
+"card_six_of_wands" = "Six of Wands";
+"card_seven_of_wands" = "Seven of Wands";
+"card_eight_of_wands" = "Eight of Wands";
+"card_nine_of_wands" = "Nine of Wands";
+"card_ten_of_wands" = "Ten of Wands";
+"card_page_of_wands" = "Page of Wands";
+"card_knight_of_wands" = "Knight of Wands";
+"card_queen_of_wands" = "Queen of Wands";
+"card_king_of_wands" = "King of Wands";
+
+/* Cups */
+"card_ace_of_cups" = "Ace of Cups";
+"card_two_of_cups" = "Two of Cups";
+"card_three_of_cups" = "Three of Cups";
+"card_four_of_cups" = "Four of Cups";
+"card_five_of_cups" = "Five of Cups";
+"card_six_of_cups" = "Six of Cups";
+"card_seven_of_cups" = "Seven of Cups";
+"card_eight_of_cups" = "Eight of Cups";
+"card_nine_of_cups" = "Nine of Cups";
+"card_ten_of_cups" = "Ten of Cups";
+"card_page_of_cups" = "Page of Cups";
+"card_knight_of_cups" = "Knight of Cups";
+"card_queen_of_cups" = "Queen of Cups";
+"card_king_of_cups" = "King of Cups";
+
+/* Swords */
+"card_ace_of_swords" = "Ace of Swords";
+"card_two_of_swords" = "Two of Swords";
+"card_three_of_swords" = "Three of Swords";
+"card_four_of_swords" = "Four of Swords";
+"card_five_of_swords" = "Five of Swords";
+"card_six_of_swords" = "Six of Swords";
+"card_seven_of_swords" = "Seven of Swords";
+"card_eight_of_swords" = "Eight of Swords";
+"card_nine_of_swords" = "Nine of Swords";
+"card_ten_of_swords" = "Ten of Swords";
+"card_page_of_swords" = "Page of Swords";
+"card_knight_of_swords" = "Knight of Swords";
+"card_queen_of_swords" = "Queen of Swords";
+"card_king_of_swords" = "King of Swords";
+
+/* Pentacles */
+"card_ace_of_pentacles" = "Ace of Pentacles";
+"card_two_of_pentacles" = "Two of Pentacles";
+"card_three_of_pentacles" = "Three of Pentacles";
+"card_four_of_pentacles" = "Four of Pentacles";
+"card_five_of_pentacles" = "Five of Pentacles";
+"card_six_of_pentacles" = "Six of Pentacles";
+"card_seven_of_pentacles" = "Seven of Pentacles";
+"card_eight_of_pentacles" = "Eight of Pentacles";
+"card_nine_of_pentacles" = "Nine of Pentacles";
+"card_ten_of_pentacles" = "Ten of Pentacles";
+"card_page_of_pentacles" = "Page of Pentacles";
+"card_knight_of_pentacles" = "Knight of Pentacles";
+"card_queen_of_pentacles" = "Queen of Pentacles";
+"card_king_of_pentacles" = "King of Pentacles";

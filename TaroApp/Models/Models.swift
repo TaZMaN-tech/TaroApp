@@ -40,12 +40,16 @@ struct TarotCard: Codable, Identifiable {
     let name: String
     let isReversed: Bool
     
+    var localizedName: String {
+        CardLocalizer.localize(name)
+    }
+    
     var displayName: String {
         if isReversed {
             let format = L10n.tr("card_reversed_format") // "%@ (reversed)" / "%@ (перевёрнута)"
-            return String(format: format, name)
+            return String(format: format, localizedName)
         } else {
-            return name
+            return localizedName
         }
     }
     

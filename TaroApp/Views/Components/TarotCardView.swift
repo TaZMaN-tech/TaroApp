@@ -82,7 +82,7 @@ final class TarotCardView: UIView {
         }
         
         imageView.image = UIImage(named: card.imageName) ?? UIImage(named: "card_back")
-        nameLabel.text = "  \(card.name)  "
+        nameLabel.text = "  \(card.localizedName)  "
         nameLabel.isHidden = false
         imageView.transform = card.isReversed ? CGAffineTransform(rotationAngle: .pi) : .identity
     }
