@@ -33,6 +33,7 @@ final class SettingsViewController: UIViewController {
     private var settings: UserSettings
     
     private let sections: [(title: String, items: [SettingsItem])] = [
+        ("Профиль", [.editName]),
         ("Внешний вид", [.darkMode]),
         ("Данные", [.clearHistory]),
         ("О приложении", [.version, .rateApp])
@@ -152,11 +153,41 @@ final class SettingsViewController: UIViewController {
             }
         }
     }
+    
+    private func showEditNameAlert() {
+        let alert = UIAlertController(
+            title: "Изменить имя",
+            message: "Введите новое имя",
+            preferredStyle: .alert
+        )
+        
+        alert.addTextField { textField in
+            textField.text = self.settings.userName
+            textField.placeholder = "Ваше имя"
+            textField.autocapitalizationType = .words
+        }
+        
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Сохранить", style: .default) { [weak self, weak alert] _ in
+            guard let self = self,
+                  let textField = alert?.textFields?.first,
+                  let newName = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  !newName.isEmpty else { return }
+            
+            self.settings.userName = newName
+            self.saveSettings()
+            self.tableView.reloadData()
+            self.showToast("Имя обновлено")
+        })
+        
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - Settings Item
 
 private enum SettingsItem {
+    case editName
     case darkMode
     case clearHistory
     case version
@@ -164,6 +195,7 @@ private enum SettingsItem {
     
     var title: String {
         switch self {
+        case .editName: return "Изменить имя"
         case .darkMode: return "Тёмная тема"
         case .clearHistory: return "Очистить историю"
         case .version: return "Версия"
@@ -173,6 +205,7 @@ private enum SettingsItem {
     
     var icon: String {
         switch self {
+        case .editName: return "person.circle.fill"
         case .darkMode: return "moon.fill"
         case .clearHistory: return "trash"
         case .version: return "info.circle.fill"
@@ -182,6 +215,7 @@ private enum SettingsItem {
     
     var iconColor: UIColor {
         switch self {
+        case .editName: return .systemBlue
         case .darkMode: return .systemIndigo
         case .clearHistory: return .systemRed
         case .version: return .systemBlue
@@ -216,6 +250,9 @@ extension SettingsViewController: UITableViewDataSource {
         cell.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         
         switch item {
+        case .editName:
+            cell.detailTextLabel?.text = settings.userName.isEmpty ? "Не указано" : settings.userName
+            cell.accessoryType = .disclosureIndicator
         case .darkMode:
             let toggle = UISwitch()
             toggle.isOn = settings.isDarkMode
@@ -264,6 +301,8 @@ extension SettingsViewController: UITableViewDelegate {
         let item = sections[indexPath.section].items[indexPath.row]
         
         switch item {
+        case .editName:
+            showEditNameAlert()
         case .clearHistory:
             clearHistory()
         case .rateApp:
