@@ -155,11 +155,21 @@ final class MainViewController: UIViewController {
         setupButtonsGrid()
         setupBindings()
         setupKeyboardDismiss()
+        
+        headerContainer.alpha = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animate(withDuration: 0.5, delay: 0.1) {
+            self.headerContainer.alpha = 1
+        }
     }
     
     // MARK: - Setup
@@ -382,13 +392,19 @@ final class MainViewController: UIViewController {
     }
     
     @objc private func editNameTapped() {
-        viewModel.startEditingName()
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         
-        // Опционально: сразу активируем клавиатуру
+        viewModel.startEditingName()
         nameTextField.becomeFirstResponder()
     }
     
     private func showNameRequiredAlert() {
+        if viewModel.screenState == .personalized {
+            viewModel.startEditingName()
+            nameTextField.becomeFirstResponder()
+            return
+        }
+        
         let alert = UIAlertController(title: "Введите имя", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
             self?.nameTextField.becomeFirstResponder()
@@ -401,6 +417,8 @@ final class MainViewController: UIViewController {
         animation.duration = 0.4
         animation.values = [-10, 10, -8, 8, -5, 5, 0]
         nameTextField.layer.add(animation, forKey: "shake")
+        
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
     }
 }
 
