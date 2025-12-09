@@ -43,7 +43,7 @@ final class MainViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Таро"
+        label.text = NSLocalizedString("app_title", comment: "")
         label.font = Design.Fonts.largeTitle
         label.textColor = Design.Colors.textPrimary
         label.textAlignment = .center
@@ -53,7 +53,7 @@ final class MainViewController: UIViewController {
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Напиши своё имя, и карты\nоткроют истину ✨"
+        label.text = NSLocalizedString("greeting_text", comment: "")
         label.font = Design.Fonts.body
         label.textColor = Design.Colors.textSecondary
         label.textAlignment = .center
@@ -64,7 +64,7 @@ final class MainViewController: UIViewController {
     
     private lazy var nameTextField: UITextField = {
         let field = UITextField()
-        field.placeholder = "Введите имя"
+        field.placeholder = NSLocalizedString("placeholder_name", comment: "")
         field.font = Design.Fonts.body
         field.textAlignment = .center
         field.backgroundColor = .white
@@ -90,7 +90,7 @@ final class MainViewController: UIViewController {
     
     private lazy var editNameButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("изменить имя", for: .normal)
+        button.setTitle(NSLocalizedString("edit_name_button", comment: ""), for: .normal)
         button.titleLabel?.font = Design.Fonts.small
         button.setTitleColor(Design.Colors.textSecondary, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -352,7 +352,8 @@ final class MainViewController: UIViewController {
             greetingLabel.isHidden = false
             editNameButton.isHidden = false
             
-            greetingLabel.text = "Здравствуй, \(viewModel.userName)!\n✨ Какие тайны откроем сегодня?"
+            let format = NSLocalizedString("personalized_greeting_format", comment: "")
+            greetingLabel.text = String(format: format, viewModel.userName)
             
             // Анимация
             UIView.animate(withDuration: 0.3) {
@@ -384,11 +385,11 @@ final class MainViewController: UIViewController {
     }
     
     @objc private func historyTapped() {
-        (viewModel as? MainViewModel)?.coordinator?.showHistory()
+        viewModel.didTapHistory()
     }
     
     @objc private func settingsTapped() {
-        (viewModel as? MainViewModel)?.coordinator?.showSettings()
+        viewModel.didTapSettings()
     }
     
     @objc private func editNameTapped() {
@@ -405,8 +406,12 @@ final class MainViewController: UIViewController {
             return
         }
         
-        let alert = UIAlertController(title: "Введите имя", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+        let alert = UIAlertController(
+            title: NSLocalizedString("empty_name_title", comment: ""),
+            message: NSLocalizedString("empty_name_message", comment: ""),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok_button", comment: ""), style: .default) { [weak self] _ in
             self?.nameTextField.becomeFirstResponder()
         })
         present(alert, animated: true)

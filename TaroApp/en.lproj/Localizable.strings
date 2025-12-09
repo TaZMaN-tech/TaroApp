@@ -5,57 +5,104 @@
   Created by Тадевос Курдоглян on 16.04.2025.
   
 */
-"greeting_text" = "✨ Fate whispers your name… Write it down, and the cards will reveal the truth";
-"placeholder_name" = "Enter your name";
-"love_button" = "❤️ Love Reading";
-"job_button" = "💼 Career Reading";
-"day_button" = "🌞 Daily Reading";
-"future_button" = "🔮 Future Reading";
-"self_button" = "🧘 Self-Discovery Reading";
-"health_button" = "🩺 Health Reading";
-"karma_button" = "🏖️ Vacation Reading";
 
-"prompt_greeting" = "Hello, %@!";
-"prompt_summary" = "Give a reading for %@ based on 3 Tarot cards: %@.\nKeep the answer short but meaningful. Format it like this:";
-"prompt_card1" = "🔮 Card 1: [name] — [brief meaning]";
-"prompt_card2" = "🔮 Card 2: [name] — [brief meaning]";
-"prompt_card3" = "🔮 Card 3: [name] — [brief meaning]";
-"prompt_ending" = "At the end, add a short summary in 2-3 sentences. Take reversed cards into account. Use emojis.";
+/* App title */
+"app_title" = "Tarot";
 
-"tip_loading" = "Loading...";
-"tip_1" = "🔮 Channeling Tarot energies...";
-"tip_2" = "✨ Connecting with the stars...";
-"tip_3" = "🌌 Unlocking mystical secrets...";
-"tip_4" = "🃏 The deck is whispering answers...";
-"tip_5" = "🌠 The universe is preparing your reading...";
-"loading_tip_accessibility" = "Loading screen tip";
+/* Spread titles */
+"spread_title_love" = "Love";
+"spread_title_career" = "Career";
+"spread_title_day" = "Day";
+"spread_title_future" = "Future";
+"spread_title_harmony" = "Harmony";
+"spread_title_health" = "Health";
+"spread_title_karma" = "Karma";
+"spread_title_vacation" = "Vacation";
 
-"new_prediction" = "NEW READING";
-"prediction_error" = "Failed to get prediction. Please try again later.";
+/* Card reversed format */
+"card_reversed_format" = "%@ (reversed)";
 
+/* History */
+"history_tab_all" = "History";
+"history_tab_favorites" = "Favorites";
+"history_title" = "History";
+"history_empty_all_title" = "History is empty";
+"history_empty_favorites_title" = "No favorites yet";
+"history_clear_title" = "Clear history?";
+"history_clear_message" = "Favorite readings will be kept";
+"history_clear_cancel" = "Cancel";
+"history_clear_confirm" = "Delete";
+"history_cell_title_format" = "%@ for %@";
 
-"greeting_accessibility" = "Enter your name for the tarot reading";
-"name_field_accessibility" = "Name input field";
-"name_field_hint" = "Type your name to receive a prediction";
+/* Settings */
+"settings_title" = "Settings";
+"settings_section_profile" = "Profile";
+"settings_section_appearance" = "Appearance";
+"settings_section_language" = "Language";
+"settings_section_data" = "Data";
+"settings_section_about" = "About";
 
-"love_button_accessibility" = "Love reading button";
-"love_button_hint" = "Tap to receive a love prediction";
+"settings_edit_name" = "Change name";
+"settings_dark_mode" = "Dark mode";
+"settings_language" = "Language";
+"settings_clear_history" = "Clear history";
+"settings_version" = "Version";
+"settings_rate_app" = "Rate the app";
+"settings_user_name_empty" = "Not set";
+"settings_clear_history_toast" = "History cleared";
 
-"prediction_result_accessibility" = "Prediction text";
-
-"card_number_format" = "Card %d";
-"card_reversed" = "reversed";
-"card_upright" = "upright";
-
-"fullscreen_card_accessibility" = "%@ card shown in fullscreen";
-
-"empty_name_title" = "Enter Name";
-"empty_name_message" = "Please enter your name before proceeding.";
-"ok_button" = "OK";
-
-"personalized_greeting_format" = "Hello, %@!\n✨ What mysteries shall we unveil today?";
-"edit_name_button" = "edit name";
 "edit_name_alert_title" = "Edit Name";
 "edit_name_alert_message" = "Enter your new name";
+"edit_name_placeholder" = "Your name";
 "edit_name_save" = "Save";
-"name_updated_toast" = "Name updated";
+
+"cancel_button" = "Cancel";
+
+"name_updated_toast" = "Name updated!";
+
+/* Language */
+"settings_language_system" = "System";
+"settings_language_ru" = "Russian";
+"settings_language_en" = "English";
+"settings_language_ru_short" = "RU";
+"settings_language_en_short" = "EN";
+"settings_language_restart_toast" = "Restart the app to apply language";
+
+/* Onboarding */
+"onboarding_page1_title" = "Welcome";
+"onboarding_page1_subtitle" = "Unveil the secrets of fate\nwith Tarot cards";
+"onboarding_page2_title" = "Choose a spread";
+"onboarding_page2_subtitle" = "Love, career, health —\nask the cards anything";
+"onboarding_page3_title" = "Save your history";
+"onboarding_page3_subtitle" = "All your readings are saved\nfor future reflection";
+"onboarding_skip" = "Skip";
+"onboarding_next" = "Next";
+"onboarding_start" = "Start";
+
+/* Prediction screen */
+"prediction_favorite_button_title" = " Favorites";
+"prediction_share_button_title" = " Share";
+"prediction_new_reading_button_title" = "New reading";
+"prediction_error_title" = "Error";
+"prediction_error_retry" = "Retry";
+"prediction_error_close" = "Close";
+
+/* Prediction detail */
+"prediction_detail_title" = "Spread";
+"prediction_detail_header_format" = "for %@ • %@";
+
+/* Loading tips */
+"loading_tip_1" = "🔮 The cards are revealing secrets...";
+"loading_tip_2" = "✨ The stars are aligning...";
+"loading_tip_3" = "🌙 The moon is whispering answers...";
+"loading_tip_4" = "🃏 Fate is shuffling the deck...";
+"loading_tip_5" = "🌟 The universe is preparing a message...";
+
+/* Share template */
+"share_prediction_template" = "🔮 My Tarot reading: %@\n\nCards: %@\n\n%@\n\n— TaroApp ✨";
+
+/* Network errors */
+"network_invalid_url" = "Invalid URL";
+"network_no_data" = "No data";
+"network_decoding_error" = "Decoding error";
+"network_server_error_format" = "Server error: %d";

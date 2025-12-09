@@ -7,6 +7,33 @@
 
 import UIKit
 
+enum AppLanguage: String, Codable, CaseIterable {
+    case system
+    case ru
+    case en
+    
+    var title: String {
+        switch self {
+        case .system: return NSLocalizedString("settings_language_system", comment: "")
+        case .ru:     return NSLocalizedString("settings_language_ru", comment: "")
+        case .en:     return NSLocalizedString("settings_language_en", comment: "")
+        }
+    }
+    
+    /// Код для бэкенда
+    var backendCode: String {
+        switch self {
+        case .system:
+            // Берём первый предпочитаемый язык системы и маппим на ru/en
+            let code = Locale.preferredLanguages.first ?? "ru"
+            return code.hasPrefix("ru") ? "ru" : "en"
+        case .ru:
+            return "ru"
+        case .en:
+            return "en"
+        }
+    }
+}
 
 struct TarotCard: Codable, Identifiable {
     let id: UUID
@@ -14,7 +41,12 @@ struct TarotCard: Codable, Identifiable {
     let isReversed: Bool
     
     var displayName: String {
-        isReversed ? "\(name) (перевёрнута)" : name
+        if isReversed {
+            let format = NSLocalizedString("card_reversed_format", comment: "") // "%@ (reversed)" / "%@ (перевёрнута)"
+            return String(format: format, name)
+        } else {
+            return name
+        }
     }
     
     var imageName: String {
@@ -81,14 +113,14 @@ enum SpreadType: String, CaseIterable, Codable {
     
     var title: String {
         switch self {
-        case .love: return "Любовь"
-        case .career: return "Карьера"
-        case .dayCard: return "День"
-        case .future: return "Будущее"
-        case .harmony: return "Гармония"
-        case .health: return "Здоровье"
-        case .karma: return "Карма"
-        case .vacation: return "Отпуск"
+        case .love:     return NSLocalizedString("love_button",   comment: "")
+        case .career:   return NSLocalizedString("job_button",    comment: "")
+        case .dayCard:  return NSLocalizedString("day_button",    comment: "")
+        case .future:   return NSLocalizedString("future_button", comment: "")
+        case .harmony:  return NSLocalizedString("self_button",   comment: "")
+        case .health:   return NSLocalizedString("health_button", comment: "")
+        case .karma:    return NSLocalizedString("karma_button",  comment: "")
+        case .vacation: return NSLocalizedString("vacation_button", comment: "")
         }
     }
     
@@ -172,6 +204,7 @@ struct UserSettings: Codable {
     var hasSeenOnboarding: Bool
     var isDarkMode: Bool
     var notificationsEnabled: Bool
+    var language: AppLanguage
     
     var hasUserName: Bool {
         !userName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -182,8 +215,40 @@ struct UserSettings: Codable {
             userName: "",
             hasSeenOnboarding: false,
             isDarkMode: false,
-            notificationsEnabled: false
+            notificationsEnabled: false,
+            language: .system
         )
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case userName
+        case hasSeenOnboarding
+        case isDarkMode
+        case notificationsEnabled
+        case language
+    }
+    
+    init(
+        userName: String,
+        hasSeenOnboarding: Bool,
+        isDarkMode: Bool,
+        notificationsEnabled: Bool,
+        language: AppLanguage
+    ) {
+        self.userName = userName
+        self.hasSeenOnboarding = hasSeenOnboarding
+        self.isDarkMode = isDarkMode
+        self.notificationsEnabled = notificationsEnabled
+        self.language = language
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        userName = try container.decode(String.self, forKey: .userName)
+        hasSeenOnboarding = try container.decode(Bool.self, forKey: .hasSeenOnboarding)
+        isDarkMode = try container.decode(Bool.self, forKey: .isDarkMode)
+        notificationsEnabled = try container.decode(Bool.self, forKey: .notificationsEnabled)
+        language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .system
     }
 }
 

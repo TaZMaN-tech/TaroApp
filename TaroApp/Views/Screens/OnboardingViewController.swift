@@ -9,10 +9,10 @@ import UIKit
 
 final class OnboardingViewController: UIViewController {
     
-    private let pages: [(icon: String, title: String, subtitle: String)] = [
-        ("🔮", "Добро пожаловать", "Откройте тайны судьбы\nс помощью карт Таро"),
-        ("🃏", "Выберите расклад", "Любовь, карьера, здоровье —\nкарты ответят на любой вопрос"),
-        ("📚", "Сохраняйте историю", "Все ваши расклады сохраняются\nдля будущих размышлений")
+    private let pages: [(icon: String, titleKey: String, subtitleKey: String)] = [
+        ("🔮", "onboarding_page1_title", "onboarding_page1_subtitle"),
+        ("🃏", "onboarding_page2_title", "onboarding_page2_subtitle"),
+        ("📚", "onboarding_page3_title", "onboarding_page3_subtitle")
     ]
     
     private lazy var backgroundView: GradientView = {
@@ -42,7 +42,7 @@ final class OnboardingViewController: UIViewController {
     
     private lazy var skipButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Пропустить", for: .normal)
+        button.setTitle(NSLocalizedString("onboarding_skip", comment: ""), for: .normal)
         button.setTitleColor(Design.Colors.textPrimary.withAlphaComponent(0.7), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(skipTapped), for: .touchUpInside)
@@ -51,7 +51,7 @@ final class OnboardingViewController: UIViewController {
     
     private lazy var nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Далее", for: .normal)
+        button.setTitle(NSLocalizedString("onboarding_next", comment: ""), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = Design.Fonts.caption
         button.backgroundColor = Design.Colors.textPrimary
@@ -77,6 +77,7 @@ final class OnboardingViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupPages()
+        updateUI()
     }
     
     private func setupUI() {
@@ -114,7 +115,11 @@ final class OnboardingViewController: UIViewController {
         var previousPage: UIView?
         
         for (index, page) in pages.enumerated() {
-            let pageView = createPageView(icon: page.icon, title: page.title, subtitle: page.subtitle)
+            let pageView = createPageView(
+                icon: page.icon,
+                titleKey: page.titleKey,
+                subtitleKey: page.subtitleKey
+            )
             pageView.translatesAutoresizingMaskIntoConstraints = false
             scrollView.addSubview(pageView)
             
@@ -139,7 +144,7 @@ final class OnboardingViewController: UIViewController {
         }
     }
     
-    private func createPageView(icon: String, title: String, subtitle: String) -> UIView {
+    private func createPageView(icon: String, titleKey: String, subtitleKey: String) -> UIView {
         let container = UIView()
         
         let iconLabel = UILabel()
@@ -149,14 +154,14 @@ final class OnboardingViewController: UIViewController {
         iconLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let titleLabel = UILabel()
-        titleLabel.text = title
+        titleLabel.text = NSLocalizedString(titleKey, comment: "")
         titleLabel.font = Design.Fonts.largeTitle
         titleLabel.textColor = Design.Colors.textPrimary
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let subtitleLabel = UILabel()
-        subtitleLabel.text = subtitle
+        subtitleLabel.text = NSLocalizedString(subtitleKey, comment: "")
         subtitleLabel.font = Design.Fonts.body
         subtitleLabel.textColor = Design.Colors.textSecondary
         subtitleLabel.textAlignment = .center
@@ -184,11 +189,16 @@ final class OnboardingViewController: UIViewController {
     
     private func updateUI() {
         let isLastPage = currentPage == pages.count - 1
-        nextButton.setTitle(isLastPage ? "Начать" : "Далее", for: .normal)
+        
+        let nextTitleKey = isLastPage ? "onboarding_start" : "onboarding_next"
+        nextButton.setTitle(NSLocalizedString(nextTitleKey, comment: ""), for: .normal)
+        
         skipButton.alpha = isLastPage ? 0 : 1
     }
     
-    @objc private func skipTapped() { complete() }
+    @objc private func skipTapped() {
+        complete()
+    }
     
     @objc private func nextTapped() {
         if currentPage < pages.count - 1 {

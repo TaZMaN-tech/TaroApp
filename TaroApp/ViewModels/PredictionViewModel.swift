@@ -56,7 +56,9 @@ final class PredictionViewModel: PredictionViewModelProtocol {
         cards = TarotCard.randomCards(count: 3)
         state = .loading
         
-        let language = Locale.current.language.languageCode?.identifier ?? "ru"
+        let settings = storageService.getUserSettings()
+        let appLanguage = settings.language
+        let languageCode = appLanguage.backendCode
         
         Task { @MainActor in
             do {
@@ -64,7 +66,7 @@ final class PredictionViewModel: PredictionViewModelProtocol {
                     cards: cards,
                     name: userName,
                     spreadType: spreadType,
-                    language: language
+                    language: languageCode
                 )
                 
                 let prediction = Prediction(
@@ -100,15 +102,13 @@ final class PredictionViewModel: PredictionViewModelProtocol {
         
         let cardsText = prediction.cards.map { $0.displayName }.joined(separator: ", ")
         
-        return """
-        🔮 Мой расклад Таро: \(prediction.spreadType.title)
-        
-        Карты: \(cardsText)
-        
-        \(prediction.text)
-        
-        — TaroApp ✨
-        """
+        let template = NSLocalizedString("share_prediction_template", comment: "")
+        return String(
+            format: template,
+            prediction.spreadType.title,
+            cardsText,
+            prediction.text
+        )
     }
     
     func dismiss() {

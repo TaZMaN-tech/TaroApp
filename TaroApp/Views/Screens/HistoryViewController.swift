@@ -13,7 +13,11 @@ final class HistoryViewController: UIViewController {
     // MARK: - UI Elements
     
     private lazy var segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["История", "Избранное"])
+        let control = UISegmentedControl(items: [
+            NSLocalizedString("history_tab_all", comment: ""),
+            NSLocalizedString("history_tab_favorites", comment: "")
+        ])
+        
         control.selectedSegmentIndex = 0
         control.translatesAutoresizingMaskIntoConstraints = false
         control.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
@@ -46,7 +50,6 @@ final class HistoryViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    
     private let viewModel: HistoryViewModelProtocol
     private var cancellables = Set<AnyCancellable>()
     
@@ -79,7 +82,7 @@ final class HistoryViewController: UIViewController {
     // MARK: - Setup
     
     private func setupUI() {
-        title = "История"
+        title = NSLocalizedString("history_title", comment: "")
         view.backgroundColor = .systemBackground
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -133,7 +136,7 @@ final class HistoryViewController: UIViewController {
             let isAllTab = viewModel.selectedTab == .all
             emptyStateView.configure(
                 icon: isAllTab ? "🔮" : "❤️",
-                title: isAllTab ? "История пуста" : "Нет избранных"
+                title: isAllTab ? NSLocalizedString("history_empty_all_title", comment: "") : NSLocalizedString("history_empty_favorites_title", comment: "")
             )
         }
     }
@@ -145,9 +148,13 @@ final class HistoryViewController: UIViewController {
     }
     
     @objc private func clearTapped() {
-        let alert = UIAlertController(title: "Очистить историю?", message: "Избранные расклады сохранятся", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+        let alert = UIAlertController(
+            title: NSLocalizedString("history_clear_title", comment: ""),
+            message: NSLocalizedString("history_clear_message", comment: ""),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("history_clear_cancel", comment: ""), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("history_clear_confirm", comment: ""), style: .destructive) { [weak self] _ in
             self?.viewModel.clearHistory()
         })
         present(alert, animated: true)
@@ -180,7 +187,7 @@ extension HistoryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, completion in
+        let deleteAction = UIContextualAction(style: .destructive, title: NSLocalizedString("history_clear_confirm", comment: "")) { [weak self] _, _, completion in
             self?.viewModel.deletePrediction(at: indexPath.row)
             completion(true)
         }
@@ -200,6 +207,13 @@ extension HistoryViewController: UITableViewDelegate {
 final class HistoryCell: UITableViewCell {
     
     static let identifier = "HistoryCell"
+    
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter
+    }()
     
     private let containerView: UIView = {
         let view = UIView()
@@ -288,12 +302,10 @@ final class HistoryCell: UITableViewCell {
     
     func configure(with prediction: Prediction) {
         iconLabel.text = prediction.spreadType.icon
-        titleLabel.text = "\(prediction.spreadType.title) для \(prediction.userName)"
+        let format = NSLocalizedString("history_cell_title_format", comment: "")
+        titleLabel.text = String(format: format, prediction.spreadType.title, prediction.userName)
         
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        subtitleLabel.text = formatter.string(from: prediction.createdAt)
+        subtitleLabel.text = HistoryCell.dateFormatter.string(from: prediction.createdAt)
         
         favoriteIcon.isHidden = !prediction.isFavorite
     }

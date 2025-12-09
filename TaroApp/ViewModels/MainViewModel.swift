@@ -30,6 +30,8 @@ protocol MainViewModelProtocol: AnyObject {
     func saveUserName()
     func startEditingName()
     func completeNameEntry()
+    func didTapHistory()
+    func didTapSettings()
 }
 
 // MARK: - Implementation
@@ -90,5 +92,13 @@ final class MainViewModel: MainViewModelProtocol {
         var settings = storageService.getUserSettings()
         settings.userName = userName.trimmingCharacters(in: .whitespacesAndNewlines)
         storageService.saveUserSettings(settings)
+    }
+    
+    func didTapHistory() {
+        coordinator?.showHistory()
+    }
+    
+    func didTapSettings() {
+        coordinator?.showSettings()
     }
 }

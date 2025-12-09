@@ -32,11 +32,12 @@ final class SettingsViewController: UIViewController {
     private let storageService: StorageServiceProtocol
     private var settings: UserSettings
     
-    private let sections: [(title: String, items: [SettingsItem])] = [
-        ("Профиль", [.editName]),
-        ("Внешний вид", [.darkMode]),
-        ("Данные", [.clearHistory]),
-        ("О приложении", [.version, .rateApp])
+    private let sections: [(titleKey: String, items: [SettingsItem])] = [
+        ("settings_section_profile",   [.editName]),
+        ("settings_section_appearance",[.darkMode]),
+        ("settings_section_language",  [.language]),
+        ("settings_section_data",      [.clearHistory]),
+        ("settings_section_about",     [.version, .rateApp])
     ]
     
     // MARK: - Init
@@ -66,9 +67,8 @@ final class SettingsViewController: UIViewController {
     // MARK: - Setup
     
     private func setupUI() {
-        title = "Настройки"
+        title = NSLocalizedString("settings_title", comment: "")
         
-        // Кнопка назад (если стандартная не работает)
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.left"),
             style: .plain,
@@ -104,20 +104,25 @@ final class SettingsViewController: UIViewController {
     
     private func clearHistory() {
         let alert = UIAlertController(
-            title: "Очистить историю?",
-            message: "Избранные расклады сохранятся",
+            title: NSLocalizedString("history_clear_title", comment: ""),
+            message: NSLocalizedString("history_clear_message", comment: ""),
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Очистить", style: .destructive) { [weak self] _ in
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("history_clear_cancel", comment: ""),
+            style: .cancel
+        ))
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("history_clear_confirm", comment: ""),
+            style: .destructive
+        ) { [weak self] _ in
             self?.storageService.clearHistory()
-            self?.showToast("История очищена")
+            self?.showToast(NSLocalizedString("settings_clear_history_toast", comment: ""))
         })
         present(alert, animated: true)
     }
     
     private func rateApp() {
-        // TODO: Заменить на реальный App Store ID
         if let url = URL(string: "https://apps.apple.com/app/id123456789") {
             UIApplication.shared.open(url)
         }
@@ -163,12 +168,19 @@ final class SettingsViewController: UIViewController {
         
         alert.addTextField { textField in
             textField.text = self.settings.userName
-            textField.placeholder = "Ваше имя"
+            textField.placeholder = NSLocalizedString("edit_name_placeholder", comment: "")
             textField.autocapitalizationType = .words
         }
         
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("edit_name_save", comment: ""), style: .default) { [weak self, weak alert] _ in
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("cancel_button", comment: ""),
+            style: .cancel
+        ))
+        
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("edit_name_save", comment: ""),
+            style: .default
+        ) { [weak self, weak alert] _ in
             guard let self = self,
                   let textField = alert?.textFields?.first,
                   let newName = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -189,37 +201,41 @@ final class SettingsViewController: UIViewController {
 private enum SettingsItem {
     case editName
     case darkMode
+    case language
     case clearHistory
     case version
     case rateApp
     
     var title: String {
         switch self {
-        case .editName: return "Изменить имя"
-        case .darkMode: return "Тёмная тема"
-        case .clearHistory: return "Очистить историю"
-        case .version: return "Версия"
-        case .rateApp: return "Оценить приложение"
+        case .editName:    return NSLocalizedString("settings_edit_name", comment: "")
+        case .darkMode:    return NSLocalizedString("settings_dark_mode", comment: "")
+        case .language:    return NSLocalizedString("settings_language", comment: "")
+        case .clearHistory:return NSLocalizedString("settings_clear_history", comment: "")
+        case .version:     return NSLocalizedString("settings_version", comment: "")
+        case .rateApp:     return NSLocalizedString("settings_rate_app", comment: "")
         }
     }
     
     var icon: String {
         switch self {
-        case .editName: return "person.circle.fill"
-        case .darkMode: return "moon.fill"
+        case .editName:     return "person.circle.fill"
+        case .darkMode:     return "moon.fill"
+        case .language:     return "globe"
         case .clearHistory: return "trash"
-        case .version: return "info.circle.fill"
-        case .rateApp: return "star.fill"
+        case .version:      return "info.circle.fill"
+        case .rateApp:      return "star.fill"
         }
     }
     
     var iconColor: UIColor {
         switch self {
-        case .editName: return .systemBlue
-        case .darkMode: return .systemIndigo
+        case .editName:     return .systemBlue
+        case .darkMode:     return .systemPurple
+        case .language:     return .systemTeal
         case .clearHistory: return .systemRed
-        case .version: return .systemBlue
-        case .rateApp: return .systemYellow
+        case .version:      return .systemGray
+        case .rateApp:      return .systemYellow
         }
     }
 }
@@ -237,57 +253,61 @@ extension SettingsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section].title
+        let sectionInfo = sections[section]
+        return NSLocalizedString(sectionInfo.titleKey, comment: "")
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+        cell.backgroundColor = UIColor.white.withAlphaComponent(0.08)
+        cell.textLabel?.textColor = .white
+        cell.detailTextLabel?.textColor = .secondaryLabel
+        
         let item = sections[indexPath.section].items[indexPath.row]
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         
         cell.textLabel?.text = item.title
         cell.imageView?.image = UIImage(systemName: item.icon)
         cell.imageView?.tintColor = item.iconColor
-        cell.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         
         switch item {
-        case .editName:
-            cell.detailTextLabel?.text = settings.userName.isEmpty ? "Не указано" : settings.userName
-            cell.accessoryType = .disclosureIndicator
-        case .darkMode:
-            let toggle = UISwitch()
-            toggle.isOn = settings.isDarkMode
-            toggle.addTarget(self, action: #selector(darkModeToggled(_:)), for: .valueChanged)
-            cell.accessoryView = toggle
-            cell.selectionStyle = .none
-            
-        case .clearHistory:
-            cell.accessoryType = .disclosureIndicator
-            cell.textLabel?.textColor = .systemRed
-            
         case .version:
-            let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-            let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
-            cell.detailTextLabel?.text = "\(version) (\(build))"
             cell.selectionStyle = .none
+            cell.detailTextLabel?.text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
             
-        case .rateApp:
+        case .language:
+            cell.selectionStyle = .none
+            let segmented = UISegmentedControl(items: [
+                NSLocalizedString("settings_language_ru_short", comment: ""),
+                NSLocalizedString("settings_language_en_short", comment: "")
+            ])
+            segmented.selectedSegmentIndex = selectedLanguageSegmentIndex()
+            segmented.addTarget(self, action: #selector(languageChanged(_:)), for: .valueChanged)
+            cell.accessoryView = segmented
+            
+        case .editName, .darkMode, .clearHistory, .rateApp:
             cell.accessoryType = .disclosureIndicator
         }
         
         return cell
     }
     
-    @objc private func darkModeToggled(_ sender: UISwitch) {
-        settings.isDarkMode = sender.isOn
-        saveSettings()
-        
-        // Применяем тему
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            UIView.animate(withDuration: 0.3) {
-                window.overrideUserInterfaceStyle = sender.isOn ? .dark : .light
-            }
+    private func selectedLanguageSegmentIndex() -> Int {
+        switch settings.language {
+        case .ru: return 0
+        case .en: return 1
+        case .system:
+            let code = Locale.preferredLanguages.first ?? "ru"
+            return code.hasPrefix("ru") ? 0 : 1
         }
+    }
+    
+    @objc private func languageChanged(_ sender: UISegmentedControl) {
+        let newLanguage: AppLanguage = (sender.selectedSegmentIndex == 0) ? .ru : .en
+        settings.language = newLanguage
+        saveSettings()
+        LanguageManager.shared.currentLanguage = newLanguage
+        
+        showToast(NSLocalizedString("settings_language_restart_toast", comment: ""))
     }
 }
 

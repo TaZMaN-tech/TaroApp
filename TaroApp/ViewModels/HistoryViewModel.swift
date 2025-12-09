@@ -13,11 +13,11 @@ import Combine
 enum HistoryTab: Int, CaseIterable {
     case all = 0
     case favorites = 1
-    
+
     var title: String {
         switch self {
-        case .all: return "История"
-        case .favorites: return "Избранное"
+        case .all:       return NSLocalizedString("history_tab_all", comment: "")
+        case .favorites: return NSLocalizedString("history_tab_favorites", comment: "")
         }
     }
 }

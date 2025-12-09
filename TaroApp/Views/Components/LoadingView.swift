@@ -18,12 +18,12 @@ final class LoadingView: UIView {
     private var tipTimer: Timer?
     private var starsTimer: Timer?
     
-    private let tips = [
-        "🔮 Карты раскрывают тайны...",
-        "✨ Звёзды выстраиваются...",
-        "🌙 Луна шепчет ответы...",
-        "🃏 Судьба тасует карты...",
-        "🌟 Вселенная готовит послание..."
+    private lazy var tips: [String] = [
+        NSLocalizedString("loading_tip_1", comment: ""),
+        NSLocalizedString("loading_tip_2", comment: ""),
+        NSLocalizedString("loading_tip_3", comment: ""),
+        NSLocalizedString("loading_tip_4", comment: ""),
+        NSLocalizedString("loading_tip_5", comment: "")
     ]
     
     // MARK: - Init
