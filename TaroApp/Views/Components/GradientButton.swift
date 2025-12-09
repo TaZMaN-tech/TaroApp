@@ -19,9 +19,15 @@ final class GradientButton: UIButton {
     
     override var isHighlighted: Bool {
         didSet {
-            UIView.animate(withDuration: 0.1) {
-                self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.96, y: 0.96) : .identity
-                self.alpha = self.isHighlighted ? 0.9 : 1.0
+            UIView.animate(withDuration: 0.15, delay: 0, options: [.curveEaseOut, .allowUserInteraction]) {
+                self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
+                self.alpha = self.isHighlighted ? 0.85 : 1.0
+                self.layer.shadowOpacity = self.isHighlighted ? 0.25 : 0.15
+                self.layer.shadowRadius = self.isHighlighted ? 12 : 4
+            }
+            
+            if isHighlighted {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
             }
         }
     }
@@ -37,9 +43,16 @@ final class GradientButton: UIButton {
     }
     
     private func setup() {
+        // Настраиваем layer для тени
         layer.cornerRadius = Design.CornerRadius.medium
-        layer.masksToBounds = true
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 8
+        layer.shadowOpacity = 0.15
         
+        // Градиент с клипингом
+        gradientLayer.cornerRadius = Design.CornerRadius.medium
+        gradientLayer.masksToBounds = true
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         layer.insertSublayer(gradientLayer, at: 0)

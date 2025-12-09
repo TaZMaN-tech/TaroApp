@@ -310,12 +310,14 @@ extension SettingsViewController: UITableViewDataSource {
     }
     
     @objc private func darkModeToggled(_ sender: UISwitch) {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         settings.isDarkMode = sender.isOn
         saveSettings()
         ThemeManager.shared.isDarkMode = sender.isOn
     }
     
     @objc private func languageChanged(_ sender: UISegmentedControl) {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         let newLanguage: AppLanguage = (sender.selectedSegmentIndex == 0) ? .ru : .en
         settings.language = newLanguage
         saveSettings()
@@ -331,6 +333,8 @@ extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         
         let item = sections[indexPath.section].items[indexPath.row]
         

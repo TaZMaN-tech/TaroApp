@@ -383,15 +383,20 @@ final class MainViewController: UIViewController {
             showNameRequiredAlert()
             return
         }
+        
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        
         let spreadType = viewModel.spreadTypes[sender.tag]
         viewModel.selectSpread(spreadType)
     }
     
     @objc private func historyTapped() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         viewModel.didTapHistory()
     }
     
     @objc private func settingsTapped() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         viewModel.didTapSettings()
     }
     

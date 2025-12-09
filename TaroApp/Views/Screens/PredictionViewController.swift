@@ -357,6 +357,7 @@ final class PredictionViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func closeTapped() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         viewModel.dismiss()
     }
     
@@ -366,12 +367,14 @@ final class PredictionViewController: UIViewController {
     }
     
     @objc private func shareTapped() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         guard let text = viewModel.sharePrediction() else { return }
         let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         present(activityVC, animated: true)
     }
     
     @objc private func newReadingTapped() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         viewModel.dismiss()
     }
 }

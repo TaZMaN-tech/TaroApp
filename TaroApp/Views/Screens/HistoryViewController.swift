@@ -32,6 +32,12 @@ final class HistoryViewController: UIViewController {
         table.dataSource = self
         table.register(HistoryCell.self, forCellReuseIdentifier: HistoryCell.identifier)
         table.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Pull-to-Refresh
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        table.refreshControl = refreshControl
+        
         return table
     }()
     
@@ -144,6 +150,7 @@ final class HistoryViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func segmentChanged() {
+        UISelectionFeedbackGenerator().selectionChanged()
         viewModel.selectedTab = HistoryTab(rawValue: segmentedControl.selectedSegmentIndex) ?? .all
     }
     
@@ -156,8 +163,18 @@ final class HistoryViewController: UIViewController {
         alert.addAction(UIAlertAction(title: L10n.tr("history_clear_cancel"), style: .cancel))
         alert.addAction(UIAlertAction(title: L10n.tr("history_clear_confirm"), style: .destructive) { [weak self] _ in
             self?.viewModel.clearHistory()
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
         })
         present(alert, animated: true)
+    }
+    
+    @objc private func refreshData() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        viewModel.loadPredictions()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.tableView.refreshControl?.endRefreshing()
+        }
     }
 }
 
@@ -183,19 +200,27 @@ extension HistoryViewController: UITableViewDataSource {
 extension HistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         viewModel.selectPrediction(at: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: L10n.tr("history_clear_confirm")) { [weak self] _, _, completion in
+        let prediction = viewModel.predictions[indexPath.row]
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completion in
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
             self?.viewModel.deletePrediction(at: indexPath.row)
             completion(true)
         }
+        deleteAction.image = UIImage(systemName: "trash.fill")
+        deleteAction.backgroundColor = .systemRed
         
-        let favoriteAction = UIContextualAction(style: .normal, title: "❤️") { [weak self] _, _, completion in
+        let favoriteAction = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             self?.viewModel.toggleFavorite(at: indexPath.row)
             completion(true)
         }
+        favoriteAction.image = UIImage(systemName: prediction.isFavorite ? "heart.slash.fill" : "heart.fill")
         favoriteAction.backgroundColor = .systemPink
         
         return UISwipeActionsConfiguration(actions: [deleteAction, favoriteAction])
@@ -210,7 +235,7 @@ final class HistoryCell: UITableViewCell {
     
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
+        formatter.dateStyle = .long
         formatter.timeStyle = .short
         return formatter
     }()
@@ -231,7 +256,7 @@ final class HistoryCell: UITableViewCell {
     
     private let iconLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 28)
+        label.font = UIFont.systemFont(ofSize: 32)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -240,11 +265,12 @@ final class HistoryCell: UITableViewCell {
         let label = UILabel()
         label.font = Design.Fonts.caption
         label.textColor = Design.Colors.textPrimary
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let subtitleLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = Design.Fonts.small
         label.textColor = Design.Colors.textSecondary
@@ -252,10 +278,26 @@ final class HistoryCell: UITableViewCell {
         return label
     }()
     
+    private let separatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = Design.Colors.separator
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let cardsLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.textColor = Design.Colors.textSecondary
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private let favoriteIcon: UILabel = {
         let label = UILabel()
         label.text = "❤️"
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -277,7 +319,9 @@ final class HistoryCell: UITableViewCell {
         contentView.addSubview(containerView)
         containerView.addSubview(iconLabel)
         containerView.addSubview(titleLabel)
-        containerView.addSubview(subtitleLabel)
+        containerView.addSubview(dateLabel)
+        containerView.addSubview(separatorLine)
+        containerView.addSubview(cardsLabel)
         containerView.addSubview(favoriteIcon)
         
         NSLayoutConstraint.activate([
@@ -286,19 +330,31 @@ final class HistoryCell: UITableViewCell {
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6),
             
-            iconLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            iconLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            iconLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            iconLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            iconLabel.widthAnchor.constraint(equalToConstant: 40),
+            iconLabel.heightAnchor.constraint(equalToConstant: 40),
+            
+            favoriteIcon.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            favoriteIcon.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
             
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 14),
             titleLabel.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 12),
             titleLabel.trailingAnchor.constraint(equalTo: favoriteIcon.leadingAnchor, constant: -8),
             
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -14),
+            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            dateLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
-            favoriteIcon.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            favoriteIcon.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+            separatorLine.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
+            separatorLine.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            separatorLine.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            separatorLine.heightAnchor.constraint(equalToConstant: 1),
+            
+            cardsLabel.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 10),
+            cardsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            cardsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            cardsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
         ])
     }
     
@@ -307,8 +363,21 @@ final class HistoryCell: UITableViewCell {
         let format = L10n.tr("history_cell_title_format")
         titleLabel.text = String(format: format, prediction.spreadType.title, prediction.userName)
         
-        subtitleLabel.text = HistoryCell.dateFormatter.string(from: prediction.createdAt)
+        dateLabel.text = HistoryCell.dateFormatter.string(from: prediction.createdAt)
+        
+        // Форматируем карты
+        let cardNames = prediction.cards.map { card in
+            card.isReversed ? "\(card.name) ⟲" : card.name
+        }.joined(separator: " • ")
+        cardsLabel.text = "🃏 \(cardNames)"
         
         favoriteIcon.isHidden = !prediction.isFavorite
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            containerView.layer.borderColor = Design.Colors.separator.cgColor
+        }
     }
 }
