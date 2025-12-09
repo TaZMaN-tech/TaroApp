@@ -145,7 +145,20 @@ final class PredictionViewController: UIViewController {
         setupUI()
         setupConstraints()
         setupBindings()
-        viewModel.loadPrediction()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if case .idle = viewModel.state {
+            // ✅ Запускаем анимации ДО начала загрузки
+            loadingView.startAnimations()
+            
+            // Небольшая задержка чтобы анимации точно начались
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.viewModel.loadPrediction()
+            }
+        }
     }
     
     // MARK: - Setup
@@ -172,6 +185,9 @@ final class PredictionViewController: UIViewController {
             cardsStack.addArrangedSubview(cardView)
             cardViews.append(cardView)
         }
+        
+        loadingView.isHidden = false
+        scrollView.isHidden = true
     }
     
     private func setupConstraints() {
@@ -240,18 +256,17 @@ final class PredictionViewController: UIViewController {
             
         case .loading:
             loadingView.isHidden = false
-            loadingView.startAnimations()  // ← Важно!
             scrollView.isHidden = true
             
         case .loaded(let prediction):
-            loadingView.stopAnimations()   // ← Важно!
+            loadingView.stopAnimations()
             loadingView.isHidden = true
             scrollView.isHidden = false
             displayPrediction(prediction)
             animateCards()
             
         case .error(let error):
-            loadingView.stopAnimations()   // ← Важно!
+            loadingView.stopAnimations()
             loadingView.isHidden = true
             scrollView.isHidden = false
             showError(error)

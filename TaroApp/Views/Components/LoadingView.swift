@@ -73,6 +73,14 @@ final class LoadingView: UIView {
         animationImageView.clipsToBounds = true
         animationImageView.layer.cornerRadius = 12
         animationImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if let placeholderImage = UIImage(named: "card_back") {
+            animationImageView.image = placeholderImage
+        } else if let firstCard = TarotDeck.allCards.first,
+                  let firstImage = UIImage(named: firstCard) {
+            animationImageView.image = firstImage
+        }
+        
         cardContainer.addSubview(animationImageView)
         
         // Подсказка
@@ -151,6 +159,8 @@ final class LoadingView: UIView {
             print("⚠️ No card images found!")
             return
         }
+        
+        animationImageView.image = images.first
         
         animationImageView.animationImages = images
         animationImageView.animationDuration = Double(images.count) * 0.7
