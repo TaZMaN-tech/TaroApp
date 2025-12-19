@@ -132,10 +132,4 @@ GitHub: [@TaZMaN-tech](https://github.com/TaZMaN-tech) • Email: kurdoglian@gma
 
 ---
 
-## 🙏 Благодарности
-
-[DeepSeek](https://www.deepseek.com/) • [Render](https://render.com/) • iOS Community
-
----
-
 **⭐ Если проект понравился — поставь звезду!**
